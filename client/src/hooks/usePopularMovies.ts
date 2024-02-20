@@ -5,7 +5,7 @@ import { popularMovieAPIURL } from "../services/config";
 
 const usePopularMovies = () => {
   return useInfiniteQuery<FetchResponse<Movie>, Error>({
-    queryKey: ["popular-movies.ts"],
+    queryKey: ["popular-movies"],
     queryFn: ({ pageParam = 1 }) =>
       apiClient(popularMovieAPIURL, {
         params: {

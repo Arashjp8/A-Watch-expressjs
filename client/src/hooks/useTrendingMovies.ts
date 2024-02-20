@@ -5,7 +5,7 @@ import { trendingMoviesAPIURL } from "../services/config";
 
 const useTrendingMovies = () => {
   return useInfiniteQuery<FetchResponse<Movie>, Error>({
-    queryKey: ["trending-movies.ts"],
+    queryKey: ["trending-movies"],
     queryFn: ({ pageParam = 1 }) =>
       apiClient(trendingMoviesAPIURL, { params: { page: pageParam } }).then(
         (res) => res.data,

@@ -10,7 +10,7 @@ interface PersonMovies {
 
 const usePersonMovie = (personId: number) => {
   return useQuery<PersonMovies, Error>({
-    queryKey: ["person-movies.ts", personId],
+    queryKey: ["person-movies", personId],
     queryFn: async () => {
       return await apiClient(
         `${BaseUrl}/person/${personId}/movie_credits?api_key=${apiKey}&language=en-US`,
