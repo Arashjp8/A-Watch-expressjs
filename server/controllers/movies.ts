@@ -1,9 +1,33 @@
 import { Request, Response } from "express";
 import { movies } from "../data/movies";
 import { credits } from "../data/credits";
+import mongoose from "mongoose";
+import axios from "axios";
+
+// getting data from TMDB API
+const getMoviesFromTMDB = async () => {
+  const BaseUrl = "https://api.themoviedb.org/3";
+  const apiKey = process.env.NODE_APP_API_KEY;
+
+  const response = await axios.get(
+    `${BaseUrl}/movie/popular?api_key=${apiKey}&language=en-US`,
+  );
+  return response.data.results;
+};
+
+// storing data in MongoDB
+const storeMoviesInMongoDB = async () => {};
 
 export const getAllMovies = (req: Request, res: Response) => {
-  res.status(200).send(movies);
+  try {
+    const fetchedMovies = getMoviesFromTMDB();
+    fetchedMovies.then((data) => {
+      console.log(fetchedMovies);
+      res.status(200).send(data);
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
 
 export const getMovieById = (req: Request, res: Response) => {

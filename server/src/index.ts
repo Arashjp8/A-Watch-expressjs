@@ -26,8 +26,8 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.get("/", (req: Request, res: Response) => {
   res.send("A-WATCH SERVER");
 });
-app.use("/api/movies", moviesRoutes);
-app.use("/api/tvshows", tvShowsRoutes);
+app.use("/api/movie", moviesRoutes);
+app.use("/api/tvshow", tvShowsRoutes);
 app.use("/api/search", searchRoutes);
 
 // MONGOOSE SERVER
