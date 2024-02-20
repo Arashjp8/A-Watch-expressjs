@@ -9,13 +9,18 @@ import searchRoutes from "../routes/search";
 import tvShowsRoutes from "../routes/tvShows";
 
 // CONFIGURATION
-const app: Express = express();
 dotenv.config();
+const app: Express = express();
 app.use(express.json());
 app.use(morgan("common"));
 app.use(cors());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+
+// TODO - Make an API call to TMDB api and get the list of Movies, TV Shows etc
+// TODO - Create a MongoDB collection for each type of data
+// TODO - Make a MongoDB Request to get the data from the collection
+// TODO - Send the data to the client
 
 // ROUTES
 app.get("/", (req: Request, res: Response) => {
@@ -27,7 +32,8 @@ app.use("/api/search", searchRoutes);
 
 // MONGOOSE SERVER
 const PORT = process.env.PORT || 6001;
-mongoose.connect(process.env.MONGO_URI || "").then(() => {
+// Attention - Hybrid MongoDB Atlas Cluster
+mongoose.connect(process.env.MONGO_LOCAL_URI || "").then(() => {
   app.listen(PORT, () =>
     console.log(`[server]: Server is running at http://localhost:${PORT}`),
   );
