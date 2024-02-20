@@ -6,6 +6,8 @@ import axios from "axios";
 
 // getting data from TMDB API
 const getMoviesFromTMDB = async () => {
+  // TODO - move these into config file
+
   const BaseUrl = "https://api.themoviedb.org/3";
   const apiKey = process.env.NODE_APP_API_KEY;
 
@@ -18,14 +20,13 @@ const getMoviesFromTMDB = async () => {
 // storing data in MongoDB
 const storeMoviesInMongoDB = async () => {};
 
-export const getAllMovies = (req: Request, res: Response) => {
+export const getAllMovies = async (req: Request, res: Response) => {
   try {
-    const fetchedMovies = getMoviesFromTMDB();
-    fetchedMovies.then((data) => {
-      console.log(fetchedMovies);
-      res.status(200).send(data);
-    });
+    const fetchedMovies = await getMoviesFromTMDB();
+    console.log(fetchedMovies);
+    res.status(200).send(fetchedMovies);
   } catch (error) {
+    console.log("Error while fetching movies", error);
     res.status(500).send(error);
   }
 };

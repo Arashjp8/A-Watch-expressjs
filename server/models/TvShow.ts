@@ -1,5 +1,21 @@
 import mongoose from "mongoose";
 
+interface TvShow {
+  backdrop_path: string;
+  first_air_date: string;
+  genre_ids: number[];
+  id: number;
+  name: string;
+  origin_country: string[];
+  original_language: string;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  vote_average: number;
+  vote_count: number;
+}
+
 const tvShowSchema = new mongoose.Schema({
   backdrop_path: String,
   first_air_date: String,
@@ -16,5 +32,5 @@ const tvShowSchema = new mongoose.Schema({
   vote_count: Number,
 });
 
-const TvShow = mongoose.model("TvShow", tvShowSchema);
+const TvShow = mongoose.model<TvShow>("TvShow", tvShowSchema);
 export default TvShow;
