@@ -6,6 +6,7 @@ import helmet from "helmet";
 import mongoose from "mongoose";
 import moviesRoutes from "../routes/movies";
 import searchRoutes from "../routes/search";
+import tvShowsRoutes from "../routes/tvShows";
 
 // CONFIGURATION
 const app: Express = express();
@@ -21,6 +22,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("A-WATCH SERVER");
 });
 app.use("/api/movies", moviesRoutes);
+app.use("/api/tvshows", tvShowsRoutes);
 app.use("/api/search", searchRoutes);
 
 // MONGOOSE SERVER
