@@ -3,18 +3,19 @@ import { movies } from "../data/movies";
 import { credits } from "../data/credits";
 import mongoose from "mongoose";
 import axios from "axios";
+import { apiUrlGenerator } from "../services/apiUrl";
+
+// TODO - maybe a web scarper to get the data from TMDB
+//  or an interval to fetch the data from TMDB weekly
 
 // getting data from TMDB API
-const getMoviesFromTMDB = async () => {
-  // TODO - move these into config file
-
-  const BaseUrl = "https://api.themoviedb.org/3";
-  const apiKey = process.env.NODE_APP_API_KEY;
-
-  const response = await axios.get(
-    `${BaseUrl}/movie/popular?api_key=${apiKey}&language=en-US`,
-  );
-  return response.data.results;
+const fetchFromTMDB = async (url: string) => {
+  try {
+    const response = await axios.get(apiUrlGenerator(url));
+    return response.data.results;
+  } catch (error) {
+    console.log("Error while fetching movies", error);
+  }
 };
 
 // storing data in MongoDB
@@ -22,8 +23,7 @@ const storeMoviesInMongoDB = async () => {};
 
 export const getAllMovies = async (req: Request, res: Response) => {
   try {
-    const fetchedMovies = await getMoviesFromTMDB();
-    console.log(fetchedMovies);
+    const fetchedMovies = await fetchFromTMDB("/discover/movie");
     res.status(200).send(fetchedMovies);
   } catch (error) {
     console.log("Error while fetching movies", error);
