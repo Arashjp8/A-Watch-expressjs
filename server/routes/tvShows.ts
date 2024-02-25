@@ -1,9 +1,11 @@
 import express from "express";
-import { getAllTvShows, getTvShowById } from "../controllers/tvShows";
+import { getTrendingTvShows, getTvShowById } from "../controllers/tvShows";
+import { getPopularMovies } from "../controllers/movies";
 
 const router = express.Router();
 
-router.get("/", getAllTvShows);
+router.get("/", getTrendingTvShows);
+router.get("/popular", getPopularMovies);
 router.get("/:id", getTvShowById);
 
 export default router;

@@ -1,6 +1,6 @@
 import express from "express";
 import {
-  getAllMovies,
+  getTrendingMovies,
   getMovieById,
   getMovieCredits,
   getPopularMovies,
@@ -8,7 +8,7 @@ import {
 
 const router = express.Router();
 
-router.get("/", getAllMovies);
+router.get("/", getTrendingMovies);
 router.get("/popular", getPopularMovies);
 router.get("/:id", getMovieById);
 router.get("/:id/credits", getMovieCredits);

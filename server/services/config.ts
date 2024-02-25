@@ -1,6 +1,6 @@
 export const BaseUrl = "https://api.themoviedb.org/3";
 export const apiKey = process.env.NODE_APP_API_KEY;
-console.log(apiKey);
+
 export const popularMovieAPIURL = `${BaseUrl}/movie/popular?api_key=${apiKey}&language=en-US`;
 export const discoverMoviesAPIURL = `${BaseUrl}/discover/movie?api_key=${apiKey}&language=en-US`;
 export const trendingMoviesAPIURL = `${BaseUrl}/trending/movie/day?api_key=${apiKey}&language=en-US`;
