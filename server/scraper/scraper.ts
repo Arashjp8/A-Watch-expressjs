@@ -7,21 +7,20 @@ import {
   titleCssPath,
   voteAverageCssPath,
 } from "./config";
-import { Crew } from "./types";
 import { organizeCrew } from "../utils/crewUtils";
 
-const baseURL = "https://www.themoviedb.org";
+const instance = axios.create({ baseURL: "https://www.themoviedb.org" });
 
 try {
-  axios.get(`${baseURL}/movie`).then(async (response) => {
+  instance.get("/movie").then(async (response) => {
     const $ = cheerio.load(response.data);
     const movies = [];
 
     $("div.page_wrapper div.card").each((i, el) => {
       const movieLink = $(el).find("div.image a").attr("href");
 
-      axios
-        .get(`${baseURL}${movieLink}`)
+      instance
+        .get(`${movieLink}`)
         .then(async (movieResponse) => {
           const movie$ = cheerio.load(movieResponse.data);
 
