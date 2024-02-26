@@ -7,11 +7,7 @@ import {
   titleCssPath,
   voteAverageCssPath,
 } from "./config";
-
-interface Crew {
-  name: string;
-  role: string;
-}
+import { Crew } from "./types";
 
 const organizeCrew = (crew: string) => {
   const crewArray = crew.split("\n").filter((item) => item.trim() !== "");
