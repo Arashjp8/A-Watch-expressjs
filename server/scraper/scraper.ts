@@ -1,5 +1,32 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
+import {
+  crewCssPath,
+  overviewCssPath,
+  releaseDateCssPath,
+  titleCssPath,
+  voteAverageCssPath,
+} from "./config";
+
+interface Crew {
+  name: string;
+  role: string;
+}
+
+const organizeCrew = (crew: string) => {
+  const crewArray = crew.split("\n").filter((item) => item.trim() !== "");
+  const crewObj: Crew[] = [];
+
+  for (let i = 0; i < crewArray.length; i += 2) {
+    i + 1 < crewArray.length &&
+      crewObj.push({
+        name: crewArray[i].trim(),
+        role: crewArray[i + 1].trim(),
+      });
+  }
+
+  return crewObj;
+};
 
 const baseURL = "https://www.themoviedb.org";
 
@@ -16,19 +43,13 @@ try {
         .then(async (movieResponse) => {
           const movie$ = cheerio.load(movieResponse.data);
 
-          const baseCssPath =
-            "body.en.v4 div.page_wrap.movie_wrap main#main.smaller.subtle section.inner_content.movie_content.backdrop.poster div.header.large.border.first div.keyboard_s.custom_bg div.single_column section#original_header.images.inner div.header_poster_wrapper section.header.poster";
-          const titleCssPath = `${baseCssPath} div.title h2 a`;
-          const releaseDateCssPath = `${baseCssPath} div.title div.facts span.release`;
-          const voteAverageCssPath = `${baseCssPath} ul.auto.actions li.chart div.consensus.details div.outer_ring div.user_score_chart`;
-          const overviewCssPath = `${baseCssPath} div.header_info div.overview p`;
-
           const title = movie$(titleCssPath).text().trim();
           const releaseDate = movie$(releaseDateCssPath).text().trim();
           const voteAverage = movie$(voteAverageCssPath)
             .attr("data-percent")!
             .trim();
           const overview = movie$(overviewCssPath).text().trim();
+          const crew = movie$(crewCssPath).text().trim();
           const imageSrc = movie$("img.poster").attr("src");
 
           console.log("\n=====================");
@@ -36,6 +57,10 @@ try {
           console.log("\nVote Average: " + voteAverage);
           console.log("\nRelease Date: " + releaseDate);
           console.log("\nOverview: " + overview);
+
+          console.log("\nCrew: ");
+          console.log(organizeCrew(crew));
+
           console.log("\nImage source: " + imageSrc);
           console.log("=====================\n");
         })
