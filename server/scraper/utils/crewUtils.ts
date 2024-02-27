@@ -1,4 +1,4 @@
-import { CastAndCrew } from "../scraper/types";
+import { CastAndCrew } from "../types";
 
 export const organizeCastAndCrew = (crew: string) => {
   const crewArray = crew.split("\n").filter((item) => item.trim() !== "");

@@ -8,14 +8,14 @@ import {
   titleCssPath,
   voteAverageCssPath,
 } from "./config";
-import { organizeCastAndCrew } from "../utils/crewUtils";
-import { parseGenres } from "../utils/genresUtils";
-import { parseDateAndLanguage } from "../utils/dateAndLanguageUtils";
+import { organizeCastAndCrew } from "./utils/crewUtils";
+import { parseGenres } from "./utils/genresUtils";
+import { parseDateAndLanguage } from "./utils/dateAndLanguageUtils";
+import { Movie } from "./types";
 
 const fetchMoviePage = async () => {
   const totalPages = 5;
-  // TODO - Add an interface for the movie object
-  const allMovies: any[] = [];
+  const allMovies: Movie[] = [];
   const delayBetweenPages = 2000; // Delay in milliseconds
 
   for (let page = 1; page <= totalPages; page++) {
@@ -28,10 +28,9 @@ const fetchMoviePage = async () => {
 };
 
 const fetchMoviesWithDelay = async (page: number, delay: number) => {
-  // TODO - Add an interface for the movie object
-  return new Promise<any>((resolve) => {
+  return new Promise<Movie[]>((resolve) => {
     setTimeout(async () => {
-      const pageMovies = await fetchMovies(page);
+      const pageMovies: Movie[] = await fetchMovies(page);
       resolve(pageMovies);
     }, delay);
   });
@@ -42,8 +41,7 @@ const fetchMovies = async (page: number) => {
   const response = await instance.get(`/movie?page=${page}`);
   const $ = cheerio.load(response.data);
 
-  // TODO - Add an interface for the movie object
-  let movies: any[] = [];
+  let movies: Movie[] = [];
 
   $("div.page_wrapper div.card").each((i, el) => {
     const movieLink = $(el).find("div.image a").attr("href");
@@ -57,9 +55,9 @@ const fetchMovies = async (page: number) => {
         const { releaseDate, originalLanguage } = parseDateAndLanguage(
           movie$(releaseDateCssPath).text().trim(),
         );
-        const voteAverage = movie$(voteAverageCssPath)
-          .attr("data-percent")!
-          .trim();
+        const voteAverage = parseInt(
+          movie$(voteAverageCssPath).attr("data-percent")!.trim(),
+        );
         const overview = movie$(overviewCssPath).text().trim();
         const crew = organizeCastAndCrew(movie$(crewCssPath).text().trim());
         const cast = organizeCastAndCrew(
@@ -71,15 +69,14 @@ const fetchMovies = async (page: number) => {
         );
         const genres = parseGenres(movie$(genresCssPath).text().trim());
         const posterPath = movie$("img.poster").attr("src");
-        const backdrop = movie$("img.backdrop").attr("src");
+        const backdropPath = movie$("img.backdrop").attr("src") || "";
 
-        // TODO - Add an interface for the movie object
-        const movieObj = {
+        const movieObj: Movie = {
           title,
           voteAverage,
           overview,
           posterPath,
-          backdrop,
+          backdropPath,
           releaseDate,
           originalLanguage,
           genres,
