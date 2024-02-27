@@ -10,6 +10,7 @@ import {
 } from "./config";
 import { organizeCrew } from "../utils/crewUtils";
 import { parseGenres } from "../utils/genresUtils";
+import { parseDateAndLanguage } from "../utils/dateAndLanguageUtils";
 
 const instance = axios.create({ baseURL: "https://www.themoviedb.org" });
 
@@ -27,28 +28,34 @@ try {
           const movie$ = cheerio.load(movieResponse.data);
 
           const title = movie$(titleCssPath).text().trim();
-          const releaseDate = movie$(releaseDateCssPath).text().trim();
+
+          const { releaseDate, originalLanguage } = parseDateAndLanguage(
+            movie$(releaseDateCssPath).text().trim(),
+          );
+
           const voteAverage = movie$(voteAverageCssPath)
             .attr("data-percent")!
             .trim();
           const overview = movie$(overviewCssPath).text().trim();
           const crew = movie$(crewCssPath).text().trim();
-          const imageSrc = movie$("img.poster").attr("src");
+          const posterPath = movie$("img.poster").attr("src");
           const genres = movie$(genresCssPath).text().trim();
 
           console.log("\n=====================");
           console.log("\nTitle: " + title);
           console.log("\nVote Average: " + voteAverage);
-          console.log("\nRelease Date: " + releaseDate);
           console.log("\nOverview: " + overview);
 
           console.log("\nCrew: ");
           console.log(organizeCrew(crew));
 
-          console.log("\nImage source: " + imageSrc);
+          console.log("\nPoster path: " + posterPath);
 
           console.log("\nGenre: ");
           console.log(parseGenres(genres));
+
+          console.log("\nRelease Date: " + releaseDate);
+          console.log("\noriginal Language: " + originalLanguage);
 
           console.log("=====================\n");
         })
