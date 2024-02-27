@@ -5,3 +5,4 @@ export const releaseDateCssPath = `${baseCssPath} div.title div.facts span.relea
 export const voteAverageCssPath = `${baseCssPath} ul.auto.actions li.chart div.consensus.details div.outer_ring div.user_score_chart`;
 export const overviewCssPath = `${baseCssPath} div.header_info div.overview p`;
 export const crewCssPath = `${baseCssPath} div.header_info ol.people.no_image li.profile`;
+export const genresCssPath = `${baseCssPath} div.title div.facts span.genres`;

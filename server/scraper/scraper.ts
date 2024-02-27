@@ -2,12 +2,14 @@ import axios from "axios";
 import * as cheerio from "cheerio";
 import {
   crewCssPath,
+  genresCssPath,
   overviewCssPath,
   releaseDateCssPath,
   titleCssPath,
   voteAverageCssPath,
 } from "./config";
 import { organizeCrew } from "../utils/crewUtils";
+import { parseGenres } from "../utils/genresUtils";
 
 const instance = axios.create({ baseURL: "https://www.themoviedb.org" });
 
@@ -32,6 +34,7 @@ try {
           const overview = movie$(overviewCssPath).text().trim();
           const crew = movie$(crewCssPath).text().trim();
           const imageSrc = movie$("img.poster").attr("src");
+          const genres = movie$(genresCssPath).text().trim();
 
           console.log("\n=====================");
           console.log("\nTitle: " + title);
@@ -43,6 +46,10 @@ try {
           console.log(organizeCrew(crew));
 
           console.log("\nImage source: " + imageSrc);
+
+          console.log("\nGenre: ");
+          console.log(parseGenres(genres));
+
           console.log("=====================\n");
         })
         .catch((error) => {

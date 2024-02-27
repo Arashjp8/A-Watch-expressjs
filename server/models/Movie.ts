@@ -11,11 +11,8 @@ interface Movie {
   poster_path: String;
   media_type: String;
   genre_ids: Number[];
-  popularity: Number;
   release_date: String;
-  video: Boolean;
   vote_average: Number;
-  vote_count: Number;
 }
 
 const MovieSchema = new mongoose.Schema<Movie>({
@@ -29,11 +26,8 @@ const MovieSchema = new mongoose.Schema<Movie>({
   poster_path: String,
   media_type: String,
   genre_ids: [Number],
-  popularity: Number,
   release_date: String,
-  video: Boolean,
   vote_average: Number,
-  vote_count: Number,
 });
 
 const Movie = mongoose.model<Movie>("Movie", MovieSchema);
