@@ -38,6 +38,9 @@ dependencies:
   morgan:
     specifier: ^1.10.0
     version: 1.10.0
+  slimerjs:
+    specifier: ^1.0.0
+    version: 1.0.0
 
 devDependencies:
   '@types/express':
@@ -46,6 +49,9 @@ devDependencies:
   '@types/node':
     specifier: ^20.11.19
     version: 20.11.19
+  '@types/slimerjs':
+    specifier: ^0.10.8
+    version: 0.10.8
   cross-env:
     specifier: ^7.0.3
     version: 7.0.3
@@ -352,6 +358,10 @@ packages:
       '@types/http-errors': 2.0.4
       '@types/mime': 3.0.4
       '@types/node': 20.11.19
+    dev: true
+
+  /@types/slimerjs@0.10.8:
+    resolution: {integrity: sha512-Z3FOgRrU0JrMiKl0tZN5WpvssxcQRBvXCtu363z/GyTqKWDqWUVoAHBWlSLX/5Rh6S1DmCgaVDHOJlDooVPZaQ==}
     dev: true
 
   /@types/webidl-conversions@7.0.3:
@@ -1230,6 +1240,11 @@ packages:
 
   /sift@16.0.1:
     resolution: {integrity: sha512-Wv6BjQ5zbhW7VFefWusVP33T/EM0vYikCaQ2qR8yULbsilAT8/wQaXvuQ3ptGLpoKx+lihJE3y2UTgKDyyNHZQ==}
+    dev: false
+
+  /slimerjs@1.0.0:
+    resolution: {integrity: sha512-zQ2cMdIqH8i8Sv8VFnJ40cr+5/+O2fRJO6XEkVS9SJEEJ4p4XtyWtsCCuxGf/RPBvgmACswIz1Me8M8zmqXN/w==}
+    hasBin: true
     dev: false
 
   /sparse-bitfield@3.0.3:
