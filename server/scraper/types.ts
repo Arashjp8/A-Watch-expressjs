@@ -1,4 +1,4 @@
-export interface Crew {
+export interface CastAndCrew {
   name: string;
   role: string;
 }

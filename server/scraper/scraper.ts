@@ -8,7 +8,7 @@ import {
   titleCssPath,
   voteAverageCssPath,
 } from "./config";
-import { organizeCrew } from "../utils/crewUtils";
+import { organizeCastAndCrew } from "../utils/crewUtils";
 import { parseGenres } from "../utils/genresUtils";
 import { parseDateAndLanguage } from "../utils/dateAndLanguageUtils";
 
@@ -38,6 +38,11 @@ try {
             .trim();
           const overview = movie$(overviewCssPath).text().trim();
           const crew = movie$(crewCssPath).text().trim();
+          const cast = movie$(
+            "body.en.v4 div.page_wrap.movie_wrap main#main.smaller.subtle section.inner_content.movie_content.backdrop.poster div#media_v4.media.movie_v4.header_large div.column_wrapper div.content_wrapper div div.white_column section.panel.top_billed.scroller div#cast_scroller.scroller_wrap.should_fade.is_fading ol.people.scroller",
+          )
+            .text()
+            .trim();
           const genres = movie$(genresCssPath).text().trim();
           const posterPath = movie$("img.poster").attr("src");
           const backdrop = movie$("img.backdrop").attr("src");
@@ -47,9 +52,6 @@ try {
           console.log("\nVote Average: " + voteAverage);
           console.log("\nOverview: " + overview);
 
-          console.log("\nCrew: ");
-          console.log(organizeCrew(crew));
-
           console.log("\nPoster path: " + posterPath);
           console.log("\nBackdrops: " + backdrop);
 
@@ -58,6 +60,12 @@ try {
 
           console.log("\nRelease Date: " + releaseDate);
           console.log("\noriginal Language: " + originalLanguage);
+
+          console.log("\nCrew: ");
+          console.log(organizeCastAndCrew(crew));
+
+          console.log("\nCast: ");
+          console.log(organizeCastAndCrew(cast));
 
           console.log("=====================\n");
         })

@@ -1,8 +1,8 @@
-import { Crew } from "../scraper/types";
+import { CastAndCrew } from "../scraper/types";
 
-export const organizeCrew = (crew: string) => {
+export const organizeCastAndCrew = (crew: string) => {
   const crewArray = crew.split("\n").filter((item) => item.trim() !== "");
-  const crewObj: Crew[] = [];
+  const crewObj: CastAndCrew[] = [];
 
   for (let i = 0; i < crewArray.length; i += 2) {
     i + 1 < crewArray.length &&
