@@ -6,7 +6,6 @@ interface Movie {
   id: Number;
   title: String;
   original_language: String;
-  original_title: String;
   overview: String;
   poster_path: String;
   media_type: String;
@@ -21,7 +20,6 @@ const MovieSchema = new mongoose.Schema<Movie>({
   id: Number,
   title: String,
   original_language: String,
-  original_title: String,
   overview: String,
   poster_path: String,
   media_type: String,

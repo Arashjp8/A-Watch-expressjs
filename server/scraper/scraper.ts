@@ -38,8 +38,9 @@ try {
             .trim();
           const overview = movie$(overviewCssPath).text().trim();
           const crew = movie$(crewCssPath).text().trim();
-          const posterPath = movie$("img.poster").attr("src");
           const genres = movie$(genresCssPath).text().trim();
+          const posterPath = movie$("img.poster").attr("src");
+          const backdrop = movie$("img.backdrop").attr("src");
 
           console.log("\n=====================");
           console.log("\nTitle: " + title);
@@ -50,6 +51,7 @@ try {
           console.log(organizeCrew(crew));
 
           console.log("\nPoster path: " + posterPath);
+          console.log("\nBackdrops: " + backdrop);
 
           console.log("\nGenre: ");
           console.log(parseGenres(genres));
