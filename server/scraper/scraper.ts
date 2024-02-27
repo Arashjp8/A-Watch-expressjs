@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
-import { Movie } from "./types";
+import { Movie, MovieResponse } from "./types";
 import { parseMovie } from "./utils/movieUtil";
 
 const fetchMoviePage = async () => {
@@ -31,12 +31,11 @@ const fetchMovies = async (page: number) => {
   const response = await instance.get(`/movie?page=${page}`);
   const $ = cheerio.load(response.data);
 
-  let movies: Movie[] = [];
+  const moviePromises: Promise<Movie | null>[] = [];
 
   $("div.page_wrapper div.card").each((i, el) => {
     const movieLink = $(el).find("div.image a").attr("href");
-
-    instance
+    const moviePromise: Promise<Movie | null> = instance
       .get(`${movieLink}`)
       .then(async (movieResponse) => {
         const movie$ = cheerio.load(movieResponse.data);
@@ -66,17 +65,20 @@ const fetchMovies = async (page: number) => {
           cast,
           crew,
         };
-        movies.push(movieObj);
-
-        console.log("\n=====================");
-        console.log(movieObj);
-        console.log("=====================\n");
+        return movieObj;
       })
       .catch((error) => {
         console.error("Error fetching movie data:", error);
+        return null;
       });
+
+    moviePromises.push(moviePromise);
   });
-  return movies;
+  const movies = await Promise.all(moviePromises);
+
+  return movies.filter((movie: Movie | null) => movie !== null) as Movie[];
 };
 
-const allMovies = fetchMoviePage();
+export const scrapedMovies: MovieResponse = JSON.parse(
+  JSON.stringify(fetchMoviePage()),
+);

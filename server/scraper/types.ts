@@ -15,3 +15,9 @@ export interface Movie {
   cast: CastAndCrew[];
   crew: CastAndCrew[];
 }
+
+export interface MovieResponse {
+  movies: Movie[];
+  totalPages: number;
+  totalResults: number;
+}

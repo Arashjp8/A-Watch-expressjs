@@ -13,13 +13,18 @@ import { parseGenres } from "./genresUtil";
 
 export const parseMovie = (movie$: cheerio.CheerioAPI) => {
   const title = movie$(titleCssPath).text().trim();
+
   const { releaseDate, originalLanguage } = parseDateAndLanguage(
     movie$(releaseDateCssPath).text().trim(),
   );
-  const voteAverage = parseInt(
-    movie$(voteAverageCssPath).attr("data-percent")!.trim(),
-  );
+
+  const voteAverageString = movie$(voteAverageCssPath).attr("data-percent");
+  const voteAverage = voteAverageString
+    ? parseInt(voteAverageString.trim())
+    : 0;
+
   const overview = movie$(overviewCssPath).text().trim();
+
   const crew = organizeCastAndCrew(movie$(crewCssPath).text().trim());
   const cast = organizeCastAndCrew(
     movie$(
@@ -28,7 +33,9 @@ export const parseMovie = (movie$: cheerio.CheerioAPI) => {
       .text()
       .trim(),
   );
+
   const genres = parseGenres(movie$(genresCssPath).text().trim());
+
   const posterPath = movie$("img.poster").attr("src");
   const backdropPath = movie$("img.backdrop").attr("src") || "";
 
