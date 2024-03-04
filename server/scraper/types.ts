@@ -4,6 +4,7 @@ export interface CastAndCrew {
 }
 
 export interface Movie {
+  movieID: string;
   title: string;
   voteAverage: number;
   overview: string;

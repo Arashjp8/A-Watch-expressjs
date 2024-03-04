@@ -35,48 +35,59 @@ const fetchMovies = async (page: number) => {
 
   $("div.page_wrapper div.card").each((i, el) => {
     const movieLink = $(el).find("div.image a").attr("href");
-    const moviePromise: Promise<Movie | null> = instance
-      .get(`${movieLink}`)
-      .then(async (movieResponse) => {
-        const movie$ = cheerio.load(movieResponse.data);
+    if (movieLink) {
+      const movieID = getMovieIDFromLink(movieLink!);
 
-        const {
-          title,
-          releaseDate,
-          originalLanguage,
-          voteAverage,
-          overview,
-          posterPath,
-          backdropPath,
-          crew,
-          cast,
-          genres,
-        } = parseMovie(movie$);
+      const moviePromise: Promise<Movie | null> = instance
+        .get(`${movieLink}`)
+        .then(async (movieResponse) => {
+          const movie$ = cheerio.load(movieResponse.data);
 
-        const movieObj: Movie = {
-          title,
-          voteAverage,
-          overview,
-          posterPath,
-          backdropPath,
-          releaseDate,
-          originalLanguage,
-          genres,
-          cast,
-          crew,
-        };
-        return movieObj;
-      })
-      .catch((error) => {
-        console.error("Error fetching movie data:", error);
-        return null;
-      });
+          const {
+            title,
+            releaseDate,
+            originalLanguage,
+            voteAverage,
+            overview,
+            posterPath,
+            backdropPath,
+            crew,
+            cast,
+            genres,
+          } = parseMovie(movie$);
 
-    moviePromises.push(moviePromise);
+          const movieObj: Movie = {
+            movieID,
+            title,
+            voteAverage,
+            overview,
+            posterPath,
+            backdropPath,
+            releaseDate,
+            originalLanguage,
+            genres,
+            cast,
+            crew,
+          };
+          console.log("movie: ", movieObj);
+          return movieObj;
+        })
+        .catch((error) => {
+          console.error("Error fetching movie data:", error);
+          return null;
+        });
+
+      moviePromises.push(moviePromise);
+    }
   });
   const movies = await Promise.all(moviePromises);
 
   return movies.filter((movie: Movie | null) => movie !== null) as Movie[];
+};
+
+const getMovieIDFromLink = (movieLink: string): string => {
+  const parts = movieLink.split("/");
+  return parts[parts.length - 1];
 };
 
 export const scrapedMovies: MovieResponse = JSON.parse(
