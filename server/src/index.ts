@@ -8,6 +8,9 @@ import moviesRoutes from "../routes/movies";
 import searchRoutes from "../routes/search";
 import tvShowsRoutes from "../routes/tvShows";
 
+console.clear();
+process.stdout.clearScreenDown();
+
 // CONFIGURATION
 dotenv.config();
 const app: Express = express();

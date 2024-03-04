@@ -4,9 +4,9 @@ import { Movie, MovieResponse } from "./types";
 import { parseMovie } from "./utils/movieUtil";
 
 const fetchMoviePage = async () => {
-  const totalPages = 5;
+  const totalPages = 1;
   const allMovies: Movie[] = [];
-  const delayBetweenPages = 2000; // Delay in milliseconds
+  const delayBetweenPages = 500; // Delay in milliseconds
 
   for (let page = 1; page <= totalPages; page++) {
     const pageMovies = await fetchMoviesWithDelay(page, delayBetweenPages);
@@ -27,7 +27,13 @@ const fetchMoviesWithDelay = async (page: number, delay: number) => {
 };
 
 const fetchMovies = async (page: number) => {
-  const instance = axios.create({ baseURL: "https://www.themoviedb.org" });
+  const instance = axios.create({
+    baseURL: "https://www.themoviedb.org",
+    headers: {
+      "Accept-Language": "en-US,en;q=0.9",
+      Cookie: process.env.TMDB_COOKIE,
+    },
+  });
   const response = await instance.get(`/movie?page=${page}`);
   const $ = cheerio.load(response.data);
 
@@ -69,7 +75,7 @@ const fetchMovies = async (page: number) => {
             cast,
             crew,
           };
-          console.log("movie: ", movieObj);
+          console.log("movieObj: ", movieObj);
           return movieObj;
         })
         .catch((error) => {
