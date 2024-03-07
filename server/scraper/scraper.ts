@@ -2,9 +2,10 @@ import axios from "axios";
 import * as cheerio from "cheerio";
 import { Movie, MovieResponse } from "./types";
 import { parseMovie } from "./utils/movieUtil";
+import MovieModel from "../models/MovieModel";
 
 const fetchMoviePage = async () => {
-  const totalPages = 1;
+  const totalPages = 5;
   const allMovies: Movie[] = [];
   const delayBetweenPages = 500; // Delay in milliseconds
 
@@ -75,6 +76,15 @@ const fetchMovies = async (page: number) => {
             cast,
             crew,
           };
+          // // Check if movie already exists in MongoDB
+          // const existingMovie = await MovieModel.findOne({ movieID, title });
+          //
+          // if (!existingMovie) {
+          //   const movie = new MovieModel(movieObj);
+          //   await movie.save();
+          //   console.log("Saved movie to MongoDB: ", movie);
+          // }
+
           console.log("movieObj: ", movieObj);
           return movieObj;
         })

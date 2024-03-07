@@ -28,5 +28,5 @@ const MovieSchema = new mongoose.Schema<Movie>({
   vote_average: Number,
 });
 
-const Movie = mongoose.model<Movie>("Movie", MovieSchema);
-export default Movie;
+const MovieModel = mongoose.model<Movie>("Movie", MovieSchema);
+export default MovieModel;

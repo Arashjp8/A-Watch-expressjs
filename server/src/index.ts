@@ -37,6 +37,9 @@ app.use("/api/search", searchRoutes);
 const PORT = process.env.PORT || 6001;
 // Attention - Hybrid MongoDB Atlas Cluster
 mongoose.connect(process.env.MONGO_LOCAL_URI || "").then(() => {
+  console.log(
+    `[server]: Connected to MongoDB Atlas on ${process.env.MONGO_LOCAL_URI}`,
+  );
   app.listen(PORT, () =>
     console.log(`[server]: Server is running at http://localhost:${PORT}`),
   );
