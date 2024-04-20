@@ -4,7 +4,7 @@ import {
   getMovieById,
   getMovieCredits,
   getPopularMovies,
-} from "../controllers/movies";
+} from "../controllers/moviesController";
 
 const router = express.Router();
 

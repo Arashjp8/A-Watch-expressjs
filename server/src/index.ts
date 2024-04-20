@@ -4,9 +4,9 @@ import cors from "cors";
 import morgan from "morgan";
 import helmet from "helmet";
 import mongoose from "mongoose";
-import moviesRoutes from "../routes/movies";
-import searchRoutes from "../routes/search";
-import tvShowsRoutes from "../routes/tvShows";
+import moviesRoutes from "../routes/moviesRoutes";
+import searchRoutes from "../routes/searchRoutes";
+import tvShowsRoutes from "../routes/tvShowsRoutes";
 
 console.clear();
 process.stdout.clearScreenDown();
@@ -20,7 +20,6 @@ app.use(cors());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
-// TODO - Make an API call to TMDB api and get the list of Movies, TV Shows etc
 // TODO - Create a MongoDB collection for each type of data
 // TODO - Make a MongoDB Request to get the data from the collection
 // TODO - Send the data to the client
