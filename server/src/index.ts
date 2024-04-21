@@ -9,7 +9,7 @@ import searchRoutes from "../routes/searchRoutes";
 import tvShowsRoutes from "../routes/tvShowsRoutes";
 
 console.clear();
-process.stdout.clearScreenDown();
+// process.stdout.clearScreenDown();
 
 // CONFIGURATION
 dotenv.config();

@@ -23,7 +23,7 @@ services:
     container_name: client
     ports:
       - "5173:5173"
-      - "5174:5174"
+#      - "5174:5174"
     depends_on:
       - server
 
@@ -33,7 +33,5 @@ services:
     container_name: mongodb_server
 
     env_file: ./server/.env
-    ports:
-      - "27018:27017"
 #    volumes:
 #      - "mongodbdata:/data/db"

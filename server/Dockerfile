@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json .
 
 # Install the dependence
-RUN npm install
+RUN npm install --loglevel=silly
 
 # Remove the existing node_modules (if any)
 RUN rm -rf node_modules
