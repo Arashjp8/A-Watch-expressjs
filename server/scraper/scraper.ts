@@ -7,7 +7,7 @@ import { Movie, MovieModel } from "../models/MovieModel";
 const fetchMoviePage = async () => {
   const totalPages = 5;
   const allMovies: Movie[] = [];
-  const delayBetweenPages = 500; // Delay in milliseconds
+  const delayBetweenPages = 100; // Delay in milliseconds
 
   for (let page = 1; page <= totalPages; page++) {
     const pageMovies = await fetchMoviesWithDelay(page, delayBetweenPages);
@@ -76,14 +76,7 @@ const fetchMovies = async (page: number) => {
             cast,
             crew,
           };
-          // Check if movie already exists in MongoDB
-          const existingMovie = await MovieModel.findOne({ movieID, title });
-
-          if (!existingMovie) {
-            const movie = new MovieModel(movieObj);
-            await movie.save();
-            console.log("Saved movie to MongoDB: ", movie);
-          }
+          await saveMovieInDB(movieObj, title, movieID);
 
           console.log("movieObj: ", movieObj);
           return movieObj;
@@ -101,11 +94,23 @@ const fetchMovies = async (page: number) => {
   return movies.filter((movie: Movie | null) => movie !== null) as Movie[];
 };
 
+const saveMovieInDB = async (
+  movieObj: Movie,
+  title: string,
+  movieID: string,
+) => {
+  const existingMovie = await MovieModel.findOne({ movieID, title });
+
+  if (!existingMovie) {
+    const movie = new MovieModel(movieObj);
+    await movie.save();
+    console.log("Saved movie to MongoDB: ", movie);
+  } else {
+    console.log(`${movieObj.title} already exists in MongoDB: `, existingMovie);
+  }
+};
+
 const getMovieIDFromLink = (movieLink: string): string => {
   const parts = movieLink.split("/");
   return parts[parts.length - 1];
 };
-
-export const scrapedMovies: MovieResponse = JSON.parse(
-  JSON.stringify(fetchMoviePage()),
-);

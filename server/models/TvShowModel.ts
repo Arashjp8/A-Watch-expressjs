@@ -19,4 +19,4 @@ const TvShowSchema = new mongoose.Schema({
 export type TvShow = mongoose.InferSchemaType<typeof TvShowSchema>;
 
 const TvShowModel = mongoose.model<TvShow>("TvShow", TvShowSchema);
-export { TvShowModel, TvShowSchema };
+export { TvShowSchema, TvShowModel };
