@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import { PersonSchema } from "./PersonModel";
-import { GenreSchema } from "./GenreModel";
 
 const MovieSchema = new mongoose.Schema({
   id: String,
@@ -14,12 +13,11 @@ const MovieSchema = new mongoose.Schema({
   posterPath: String,
   releaseDate: String,
   originalLanguage: String,
-  genres: [{}],
+  genres: [String],
   cast: [{}],
   crew: [{}],
 });
 
-MovieSchema.path("genres").schema.path("type").schema = GenreSchema;
 MovieSchema.path("cast").schema.path("type").schema = PersonSchema;
 MovieSchema.path("crew").schema.path("type").schema = PersonSchema;
 
