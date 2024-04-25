@@ -1,6 +1,6 @@
 import { Movie } from "../models/MovieModel";
 
-export interface CastAndCrew {
+export interface People {
   name: string;
   role: string;
 }

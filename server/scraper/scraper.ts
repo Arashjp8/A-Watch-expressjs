@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
-import { MovieResponse } from "./types";
 import { parseMovie } from "./utils/movieUtil";
+import { MovieResponse } from "./types";
 import { Movie, MovieModel } from "../models/MovieModel";
 
 const fetchMoviePage = async () => {
@@ -76,7 +76,7 @@ const fetchMovies = async (page: number) => {
             cast,
             crew,
           };
-          await saveMovieInDB(movieObj, title, movieID);
+          // await saveMovieInDB(movieObj, title, movieID);
 
           console.log("movieObj: ", movieObj);
           return movieObj;
@@ -114,3 +114,8 @@ const getMovieIDFromLink = (movieLink: string): string => {
   const parts = movieLink.split("/");
   return parts[parts.length - 1];
 };
+
+// supposed to be called from /controllers/movieController.ts
+export const scrapedMovies: MovieResponse = JSON.parse(
+  JSON.stringify(fetchMoviePage()),
+);

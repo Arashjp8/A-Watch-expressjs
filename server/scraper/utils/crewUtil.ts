@@ -1,16 +1,16 @@
-import { CastAndCrew } from "../types";
+import { People } from "../types";
 
-export const organizeCastAndCrew = (crew: string) => {
-  const crewArray = crew.split("\n").filter((item) => item.trim() !== "");
-  const crewObj: CastAndCrew[] = [];
+export const organizePeople = (crew: string) => {
+  const peopleArray = crew.split("\n").filter((item) => item.trim() !== "");
+  const peopleObj: People[] = [];
 
-  for (let i = 0; i < crewArray.length; i += 2) {
-    i + 1 < crewArray.length &&
-      crewObj.push({
-        name: crewArray[i].trim(),
-        role: crewArray[i + 1].trim(),
+  for (let i = 0; i < peopleArray.length; i += 2) {
+    i + 1 < peopleArray.length &&
+      peopleObj.push({
+        name: peopleArray[i].trim(),
+        role: peopleArray[i + 1].trim(),
       });
   }
 
-  return crewObj;
+  return peopleObj;
 };

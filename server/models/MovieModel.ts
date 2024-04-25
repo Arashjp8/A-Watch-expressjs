@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { PersonSchema } from "./PersonModel";
+// import { PersonSchema } from "./PersonModel";
 
 const MovieSchema = new mongoose.Schema({
   id: String,
@@ -18,8 +18,8 @@ const MovieSchema = new mongoose.Schema({
   crew: [{}],
 });
 
-MovieSchema.path("cast").schema.path("type").schema = PersonSchema;
-MovieSchema.path("crew").schema.path("type").schema = PersonSchema;
+// MovieSchema.path("cast").schema.path("type").schema = PersonSchema;
+// MovieSchema.path("crew").schema.path("type").schema = PersonSchema;
 
 export type Movie = mongoose.InferSchemaType<typeof MovieSchema>;
 
