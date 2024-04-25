@@ -1,6 +1,6 @@
 import { ScrapeStrategy } from "./interface";
 import {
-  scrapeCastStrategy,
+  scrapePersonStrategy,
   scrapeMovieStrategy,
   scrapePopularPageStrategy,
 } from "./concreteScrapeStrategies";
@@ -30,5 +30,5 @@ const popularPageLink = `/movie`;
     "total number of links: ",
     personLinks.castLinks.length + personLinks.crewLinks.length,
   );
-  await scrapeDataUsingStrategy(scrapeCastStrategy, personLinks);
+  await scrapeDataUsingStrategy(scrapePersonStrategy, personLinks);
 })();

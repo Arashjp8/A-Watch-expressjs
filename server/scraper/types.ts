@@ -1,7 +1,7 @@
 import { Movie } from "../models/MovieModel";
 
 export interface People {
-  name: string;
+  id: string;
   role: string;
 }
 
