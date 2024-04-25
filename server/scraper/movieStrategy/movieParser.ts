@@ -1,7 +1,4 @@
 import {
-  axiosInstance,
-  castCssPath,
-  crewCssPath,
   genresCssPath,
   overviewCssPath,
   releaseDateCssPath,
@@ -14,16 +11,12 @@ import { parseDateAndLanguage } from "../utils/dateAndLanguageUtil";
 import { organizePeople } from "../utils/crewUtil";
 import { parseGenres } from "../utils/genresUtil";
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-export const movieParser = async (movieLinks: string[]) => {
-  const delayPerRequest = 100; // delay in milliseconds
-
-  for (const movieLink of movieLinks) {
-    await delay(delayPerRequest);
-
-    const response = await axiosInstance.get(movieLink);
-    const $ = cheerio.load(response.data);
+export const movieParser = async (
+  moviePageHtmlArray: any[],
+  movieLinks: string[],
+) => {
+  for (let i = 0; i < moviePageHtmlArray.length; i++) {
+    const $ = cheerio.load(moviePageHtmlArray[i]);
 
     const title = $(titleCssPath).text().trim();
     const { releaseDate, originalLanguage } = parseDateAndLanguage(
@@ -39,7 +32,7 @@ export const movieParser = async (movieLinks: string[]) => {
     const genres = parseGenres($(genresCssPath).text().trim());
     const posterPath = $("img.poster").attr("src");
     const backdropPath = $("img.backdrop").attr("src") || "";
-    const movieID = getIDFromLink(movieLink);
+    const movieID = getIDFromLink(movieLinks[i]);
 
     const movieObject = {
       movieID,
