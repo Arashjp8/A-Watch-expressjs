@@ -20,9 +20,15 @@ const popularPageLink = `/movie`;
     popularPageLink,
   );
   console.log(movieLinks, "total number of links: ", movieLinks.length);
-  const castLinks: string[] = await scrapeDataUsingStrategy(
+
+  const personLinks = await scrapeDataUsingStrategy(
     scrapeMovieStrategy,
     movieLinks,
   );
-  await scrapeDataUsingStrategy(scrapeCastStrategy, castLinks);
+  console.log(
+    personLinks,
+    "total number of links: ",
+    personLinks.castLinks.length + personLinks.crewLinks.length,
+  );
+  await scrapeDataUsingStrategy(scrapeCastStrategy, personLinks);
 })();

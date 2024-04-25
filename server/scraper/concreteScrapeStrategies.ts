@@ -1,9 +1,6 @@
-import { ScrapeStrategy } from "./interface";
-import axios from "axios";
-import * as cheerio from "cheerio";
+import { PersonLinksObject, ScrapeStrategy } from "./interface";
 import { getMovieLinks } from "./pageStrategy/getMovieLinks";
-
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+import { getPersonLinks } from "./movieStrategy/getPersonLinks";
 
 export const scrapePopularPageStrategy: ScrapeStrategy = {
   async scrape(pageLink: string): Promise<string[]> {
@@ -12,14 +9,13 @@ export const scrapePopularPageStrategy: ScrapeStrategy = {
 };
 
 export const scrapeMovieStrategy: ScrapeStrategy = {
-  async scrape(movieLinks: string[]): Promise<string[]> {
-    const castLinks: string[] = [];
-    return castLinks;
+  async scrape(movieLinks: string[]): Promise<PersonLinksObject> {
+    return getPersonLinks(movieLinks);
   },
 };
 
 export const scrapeCastStrategy: ScrapeStrategy = {
-  async scrape(castLinks: string[]): Promise<any> {
+  async scrape(personLinks: PersonLinksObject): Promise<any> {
     return Promise.resolve;
   },
 };
