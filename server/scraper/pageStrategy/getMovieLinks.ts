@@ -4,7 +4,7 @@ import { axiosInstance } from "../config";
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const getMovieLinks = async (pageLink: string) => {
-  const totalPages = 2;
+  const totalPages = 1;
   const delayPerRequest = 100; // delay in milliseconds
   const movieLinks: string[] = [];
 

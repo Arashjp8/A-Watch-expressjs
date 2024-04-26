@@ -5,10 +5,11 @@ const VideoSchema = new mongoose.Schema({
   videos: [
     {
       id: String,
-      title: String,
+      name: String,
       key: String,
       site: String,
-      date: String,
+      publishedAt: String,
+      type: String,
     },
   ],
 });

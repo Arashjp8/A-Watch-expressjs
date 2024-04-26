@@ -11,3 +11,12 @@ export interface People {
   id: string;
   role: string;
 }
+
+export interface Video {
+  id: string;
+  name: string;
+  key: string;
+  site: string;
+  publishedAt: string;
+  type: string;
+}

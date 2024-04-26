@@ -27,7 +27,7 @@ const popularPageLink = `/movie`;
   );
   console.log(
     personLinks,
-    "total number of links: ",
+    "total number of person links: ",
     personLinks.castLinks.length + personLinks.crewLinks.length,
   );
   await scrapeDataUsingStrategy(scrapePersonStrategy, personLinks);
