@@ -2,7 +2,7 @@ import { axiosInstance } from "../config";
 import * as cheerio from "cheerio";
 import { Video } from "../interface";
 
-export const getVideoLinks = async (movieLinks: string[]) => {
+export const getVideos = async (movieLinks: string[]) => {
   const navItems = [
     "Trailers",
     "Teasers",
@@ -25,7 +25,9 @@ export const getVideoLinks = async (movieLinks: string[]) => {
         const name = $(element).find("div.video.card div a").attr("data-title");
         const key = $(element).find("div.video.card div a").attr("data-id");
         const site = $(element).find("div.video.card div a").attr("data-site");
-        const publishedAt = $(element).find("div.info.movie div h3").text();
+        const publishedAt = getVideoPublishDate(
+          $(element).find("div.info.movie div h3").text(),
+        );
         const type = navItem;
 
         if (id && name && key && site && publishedAt) {
@@ -45,4 +47,31 @@ export const getVideoLinks = async (movieLinks: string[]) => {
 
     console.log(`videos for ${movieLink}: `, videos);
   }
+};
+
+const getVideoPublishDate = (publishedAtRaw: string | undefined): string => {
+  if (!publishedAtRaw) {
+    return "";
+  }
+
+  let publishedAt = publishedAtRaw.split(" • ")[2];
+
+  // Check if the split result contains a comma
+  if (publishedAt.includes(",")) {
+    // If it does, extract only the part before the comma
+    publishedAt = publishedAt.split(",")[0];
+
+    // Check if there are two spaces between the month and the date
+    if (publishedAt.includes("  ")) {
+      // If there are two spaces, replace them with one space
+      publishedAt = publishedAt.replace(/ {2}/g, " ");
+    }
+
+    // Check if the split result contains a year (four digits)
+    const yearMatch = publishedAtRaw.match(/\d{4}/);
+    if (yearMatch) {
+      publishedAt += ` ${yearMatch[0]}`;
+    }
+  }
+  return publishedAt ? publishedAt : "";
 };
