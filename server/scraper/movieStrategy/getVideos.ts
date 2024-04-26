@@ -28,7 +28,8 @@ export const getVideos = async (movieLinks: string[]) => {
         const publishedAt = getVideoPublishDate(
           $(element).find("div.info.movie div h3").text(),
         );
-        const type = navItem;
+        // removing 's' from the end of the navItem
+        const type = navItem.slice(0, -1);
 
         if (id && name && key && site && publishedAt) {
           const videoObj = {
@@ -44,6 +45,8 @@ export const getVideos = async (movieLinks: string[]) => {
         }
       });
     }
+
+    // TODO - Add videos to database with movie ID
 
     console.log(`videos for ${movieLink}: `, videos);
   }
@@ -73,5 +76,5 @@ const getVideoPublishDate = (publishedAtRaw: string | undefined): string => {
       publishedAt += ` ${yearMatch[0]}`;
     }
   }
-  return publishedAt ? publishedAt : "";
+  return publishedAt;
 };

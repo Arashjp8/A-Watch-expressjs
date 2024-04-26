@@ -4,6 +4,7 @@ import { getPersonLinks } from "./movieStrategy/getPersonLinks";
 import { movieParser } from "./movieStrategy/movieParser";
 import { axiosInstance } from "./config";
 import { getVideos } from "./movieStrategy/getVideos";
+import { personParser } from "./personStrategy/personParser";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -23,14 +24,15 @@ export const scrapeMovieStrategy: ScrapeStrategy = {
       moviePageHtmlArray.push(response.data);
       await delay(delayPerRequest);
     }
-    await movieParser(moviePageHtmlArray, movieLinks);
-    await getVideos(movieLinks);
+    // await movieParser(moviePageHtmlArray, movieLinks);
+    // await getVideos(movieLinks);
     return getPersonLinks(moviePageHtmlArray);
   },
 };
 
 export const scrapePersonStrategy: ScrapeStrategy = {
   async scrape(personLinks: PersonLinksObject): Promise<any> {
+    await personParser(personLinks);
     return Promise.resolve;
   },
 };

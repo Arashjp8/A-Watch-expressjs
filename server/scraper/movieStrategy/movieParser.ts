@@ -48,6 +48,8 @@ export const movieParser = async (
       backdropPath,
     };
 
+    // TODO - Add movie to database
+
     console.log(`movie ${movieID} info: `, movieObject);
   }
 };

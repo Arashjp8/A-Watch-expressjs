@@ -8,12 +8,9 @@ const PersonSchema = new mongoose.Schema({
   movieIDs: [String],
   tvShowIDs: [String],
   biography: String,
-  birthday: String,
   gender: Number,
-  homepage: String,
-  imdbID: String,
   knownForDepartment: String,
-  popularity: Number,
+  birthday: String,
   placeOfBirth: String,
   profilePath: String,
 });
@@ -21,8 +18,8 @@ const PersonSchema = new mongoose.Schema({
 // PersonSchema.path("movies").schema.path("type").schema = MovieSchema;
 // PersonSchema.path("tvShows").schema.path("type").schema = TvShowSchema;
 
-export type Person = mongoose.InferSchemaType<typeof PersonSchema>;
+type Person = mongoose.InferSchemaType<typeof PersonSchema>;
 
 const PersonModel = mongoose.model<Person>("Person", PersonSchema);
 
-export { PersonModel, PersonSchema };
+export { PersonModel, PersonSchema, Person };
