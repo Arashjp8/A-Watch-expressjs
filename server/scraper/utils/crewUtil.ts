@@ -1,10 +1,10 @@
-import { People } from "../types";
+import { People } from "../interface";
 import { CheerioAPI } from "cheerio";
 import { crewCssPath, castCssPath, getIDFromLink } from "../config";
 
 export const organizePeople = ($: CheerioAPI, type: "cast" | "crew") => {
-  let people: string = "";
-  let selector: string = "";
+  let people: string;
+  let selector: string;
 
   if (type === "crew") {
     people = $(crewCssPath).text().trim();

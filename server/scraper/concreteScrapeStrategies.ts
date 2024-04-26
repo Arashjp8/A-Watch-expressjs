@@ -3,6 +3,7 @@ import { getMovieLinks } from "./pageStrategy/getMovieLinks";
 import { getPersonLinks } from "./movieStrategy/getPersonLinks";
 import { movieParser } from "./movieStrategy/movieParser";
 import { axiosInstance } from "./config";
+import { getVideoLinks } from "./movieStrategy/getVideoLinks";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -23,6 +24,7 @@ export const scrapeMovieStrategy: ScrapeStrategy = {
       await delay(delayPerRequest);
     }
     await movieParser(moviePageHtmlArray, movieLinks);
+    await getVideoLinks(movieLinks);
     return getPersonLinks(moviePageHtmlArray);
   },
 };
