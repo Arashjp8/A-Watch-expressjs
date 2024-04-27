@@ -1,6 +1,7 @@
 import { PersonLinksObject } from "../interface";
 import { axiosInstance, getIDFromLink } from "../config";
 import * as cheerio from "cheerio";
+import { CheerioAPI } from "cheerio";
 // import {Person} from "../../models/PersonModel";
 
 export const personParser = async (personLinks: PersonLinksObject) => {
@@ -50,6 +51,9 @@ const scrapeData = async (link: string) => {
     .trim();
   const profilePath = $("section.images.inner div div img").attr("src");
 
+  const movieIDs = await getFilmography(link, "movie");
+  const tvShowIDs = await getFilmography(link, "tv");
+
   return {
     id,
     name,
@@ -59,5 +63,22 @@ const scrapeData = async (link: string) => {
     knowForDepartment,
     placeOfBirth,
     profilePath,
+    movieIDs,
+    tvShowIDs,
   };
+};
+
+const getFilmography = async (link: string, creditMediaType: string) => {
+  let allFilmIDs: string[] = [];
+  const response = await axiosInstance.get(
+    `${link}?credit_media_type=${creditMediaType}`,
+  );
+  const $ = cheerio.load(response.data);
+  $("table.card.credits table.credit_group tr").each((_, element) => {
+    const filmLink = $(element).find("a.tooltip").attr("href");
+    const filmID = filmLink ? getIDFromLink(filmLink) : null;
+    filmID ? allFilmIDs.push(filmID) : null;
+  });
+
+  return allFilmIDs;
 };
