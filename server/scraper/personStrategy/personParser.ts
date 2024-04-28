@@ -1,8 +1,6 @@
 import { PersonLinksObject } from "../interface";
 import { axiosInstance, getIDFromLink } from "../config";
 import * as cheerio from "cheerio";
-import { CheerioAPI } from "cheerio";
-// import {Person} from "../../models/PersonModel";
 
 export const personParser = async (personLinks: PersonLinksObject) => {
   let people: any[] = [];

@@ -13,13 +13,13 @@ export const getPersonLinks = async (moviePageHtmlArray: any[]) => {
 
     const $ = cheerio.load(html);
 
-    $("ol.people.no_image").each((_, element) => {
-      const link = $(element).find("li.profile a").attr("href");
+    $("ol.people.no_image li.profile").each((_, element) => {
+      const link = $(element).find("a").attr("href");
       link ? crewLinks.push(link) : null;
     });
 
-    $("ol.people.scroller").each((_, element) => {
-      const link = $(element).find("li.card a").attr("href");
+    $("ol.people.scroller li.card").each((_, element) => {
+      const link = $(element).find("a").attr("href");
       link ? castLinks.push(link) : null;
     });
   }
