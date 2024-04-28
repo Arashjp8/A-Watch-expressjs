@@ -1,10 +1,11 @@
 import * as cheerio from "cheerio";
+import { CheerioAPI } from "cheerio";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const getPersonLinks = async (moviePageHtmlArray: any[]) => {
-  const castLinks: string[] = [];
-  const crewLinks: string[] = [];
+  let castLinks: string[] = [];
+  let crewLinks: string[] = [];
 
   for (const html of moviePageHtmlArray) {
     const delayPerRequest = 100; // delay in milliseconds
@@ -13,16 +14,24 @@ export const getPersonLinks = async (moviePageHtmlArray: any[]) => {
 
     const $ = cheerio.load(html);
 
-    $("ol.people.no_image li.profile").each((_, element) => {
-      const link = $(element).find("a").attr("href");
-      link ? crewLinks.push(link) : null;
-    });
-
-    $("ol.people.scroller li.card").each((_, element) => {
-      const link = $(element).find("a").attr("href");
-      link ? castLinks.push(link) : null;
-    });
+    castLinks = [...linkExtractor($, castLinks, "ol.people.scroller li.card")];
+    crewLinks = [
+      ...linkExtractor($, crewLinks, "ol.people.no_image li.profile"),
+    ];
   }
 
   return { castLinks, crewLinks };
+};
+
+const linkExtractor = (
+  $: CheerioAPI,
+  linksArray: string[],
+  selector: string,
+): string[] => {
+  $(selector).each((_, element) => {
+    const link = $(element).find("a").attr("href");
+    link ? linksArray.push(link) : null;
+  });
+
+  return linksArray;
 };
