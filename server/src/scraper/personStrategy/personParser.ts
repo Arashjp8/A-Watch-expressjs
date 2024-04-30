@@ -2,19 +2,40 @@ import { PersonLinksObject } from "../interface";
 import { axiosInstance, getIDFromLink } from "../config";
 import * as cheerio from "cheerio";
 
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export const personParser = async (personLinks: PersonLinksObject) => {
   let people: any[] = [];
+  const delayPerRequest = 50; // delay in milliseconds
+
   for (const crewLink of personLinks.crewLinks) {
-    people.push(await scrapeData(crewLink));
+    await delay(delayPerRequest);
+    if (!shouldSkipScraping(crewLink)) {
+      people.push(await scrapeData(crewLink));
+    }
   }
   for (const castLink of personLinks.castLinks) {
-    people.push(await scrapeData(castLink));
+    await delay(delayPerRequest);
+    if (!shouldSkipScraping(castLink)) {
+      people.push(await scrapeData(castLink));
+    }
   }
   console.log("scraped people", people);
   console.log(`${people.length} people found`);
 };
 
+const shouldSkipScraping = (link: string) => {
+  // Add conditions to check if the link matches the URLs you want to avoid
+  return (
+    link.includes("/person/119337-choi-dong-hoon") ||
+    link.includes("/person/1293791-lee-ki-cheol") ||
+    link.includes("/person/37939-yum-jeong-ah")
+  );
+};
+
 const scrapeData = async (link: string) => {
+  console.log("scraping ", link);
+
   const response = await axiosInstance.get(link);
   const $ = cheerio.load(response.data);
 
@@ -68,10 +89,12 @@ const scrapeData = async (link: string) => {
 
 const getFilmography = async (link: string, creditMediaType: string) => {
   let allFilmIDs: string[] = [];
+
   const response = await axiosInstance.get(
     `${link}?credit_media_type=${creditMediaType}`,
   );
   const $ = cheerio.load(response.data);
+
   $("table.card.credits table.credit_group tr").each((_, element) => {
     const filmLink = $(element).find("a.tooltip").attr("href");
     const filmID = filmLink ? getIDFromLink(filmLink) : null;

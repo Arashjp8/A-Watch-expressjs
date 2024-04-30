@@ -4,9 +4,9 @@ import cors from "cors";
 import morgan from "morgan";
 import helmet from "helmet";
 import mongoose from "mongoose";
-import moviesRoutes from "../routes/moviesRoutes";
-import searchRoutes from "../routes/searchRoutes";
-import tvShowsRoutes from "../routes/tvShowsRoutes";
+import moviesRoutes from "./routes/moviesRoutes";
+import searchRoutes from "./routes/searchRoutes";
+import tvShowsRoutes from "./routes/tvShowsRoutes";
 
 console.clear();
 // process.stdout.clearScreenDown();
