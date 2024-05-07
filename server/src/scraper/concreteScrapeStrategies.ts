@@ -2,9 +2,10 @@ import { PersonLinksObject, ScrapeStrategy } from "./interface";
 import { getMovieLinks } from "./pageStrategy/getMovieLinks";
 import { getPersonLinks } from "./movieStrategy/getPersonLinks";
 import { movieParser } from "./movieStrategy/movieParser";
-import { axiosInstance } from "./config";
 import { getVideos } from "./movieStrategy/getVideos";
 import { personParser } from "./personStrategy/personParser";
+import { axiosInstance } from "./utils/axiosInstance";
+// import axiosWithRetry from "./utils/axiosInstance";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

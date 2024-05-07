@@ -1,6 +1,6 @@
-import { axiosInstance } from "../config";
 import * as cheerio from "cheerio";
 import { Video } from "../interface";
+import { axiosInstance } from "../utils/axiosInstance";
 
 export const getVideos = async (movieLinks: string[]) => {
   const navItems = [

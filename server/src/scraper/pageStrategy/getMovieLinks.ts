@@ -1,5 +1,5 @@
 import * as cheerio from "cheerio";
-import { axiosInstance } from "../config";
+import { axiosInstance } from "../utils/axiosInstance";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
