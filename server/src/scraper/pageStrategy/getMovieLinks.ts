@@ -1,16 +1,14 @@
 import * as cheerio from "cheerio";
 import { axiosInstance } from "../utils/axiosInstance";
-
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+import { delay, DELAY_TIME_IN_MS } from "../utils/delayService";
 
 export const getMovieLinks = async (pageLink: string) => {
   const totalPages = 1;
-  const delayPerRequest = 100;
   const movieLinks: string[] = [];
 
   for (let page = 1; page <= totalPages; page++) {
     try {
-      await delay(delayPerRequest);
+      await delay(DELAY_TIME_IN_MS);
 
       console.log(`Scraping page ${page} of ${totalPages}`);
 

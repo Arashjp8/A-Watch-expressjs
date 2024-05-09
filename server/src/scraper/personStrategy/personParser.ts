@@ -2,19 +2,17 @@ import { PersonLinksObject } from "../interface";
 import { getIDFromLink } from "../config";
 import * as cheerio from "cheerio";
 import { axiosInstance } from "../utils/axiosInstance";
-
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+import { delay, DELAY_TIME_IN_MS } from "../utils/delayService";
 
 export const personParser = async (personLinks: PersonLinksObject) => {
   let people: any[] = [];
-  const delayPerRequest = 50; // delay in milliseconds
 
   for (const crewLink of personLinks.crewLinks) {
-    await delay(delayPerRequest);
+    await delay(DELAY_TIME_IN_MS);
     people.push(await scrapeData(crewLink));
   }
   for (const castLink of personLinks.castLinks) {
-    await delay(delayPerRequest);
+    await delay(DELAY_TIME_IN_MS);
     people.push(await scrapeData(castLink));
   }
   console.log("scraped people", people);
@@ -84,6 +82,7 @@ const scrapeData = async (link: string) => {
     })
     .catch((error) => {
       console.error(`Error scraping ${link}: ${error.message}`);
+      console.log(`Error status code: ${error.response.status}`);
       throw error;
     });
 };
@@ -110,6 +109,8 @@ const getFilmography = async (
     })
     .catch((error) => {
       console.error(`Error getting filmography for ${link}: ${error.message}`);
+      console.log(`Error status code: ${error.response.status}`);
+
       throw error;
     });
 };

@@ -21,6 +21,7 @@ export const axiosInstance = axios.create({
 
 axiosRetry(axiosInstance, {
   retries: 3,
+  retryDelay: axiosRetry.exponentialDelay,
   retryCondition(error) {
     if (error.response) {
       switch (error.response.status) {
