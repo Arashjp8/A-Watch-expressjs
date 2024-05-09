@@ -5,20 +5,28 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const getMovieLinks = async (pageLink: string) => {
   const totalPages = 1;
-  const delayPerRequest = 100; // delay in milliseconds
+  const delayPerRequest = 100;
   const movieLinks: string[] = [];
 
   for (let page = 1; page <= totalPages; page++) {
-    await delay(delayPerRequest);
+    try {
+      await delay(delayPerRequest);
 
-    console.log(`Scraping page ${page} of ${totalPages}`);
-    const response = await axiosInstance.get(`${pageLink}?page=${page}`);
-    const $ = cheerio.load(response.data);
+      console.log(`Scraping page ${page} of ${totalPages}`);
 
-    $("div.card").each((_, element) => {
-      const link = $(element).find("div.image a").attr("href");
-      link ? movieLinks.push(link) : null;
-    });
+      const response = await axiosInstance.get(`${pageLink}?page=${page}`);
+
+      const $ = cheerio.load(response.data);
+
+      $("div.card").each((_, element) => {
+        const link = $(element).find("div.image a").attr("href");
+        if (link) {
+          movieLinks.push(link);
+        }
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return movieLinks;

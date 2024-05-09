@@ -5,7 +5,6 @@ import { movieParser } from "./movieStrategy/movieParser";
 import { getVideos } from "./movieStrategy/getVideos";
 import { personParser } from "./personStrategy/personParser";
 import { axiosInstance } from "./utils/axiosInstance";
-// import axiosWithRetry from "./utils/axiosInstance";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -17,17 +16,29 @@ export const scrapePopularPageStrategy: ScrapeStrategy = {
 
 export const scrapeMovieStrategy: ScrapeStrategy = {
   async scrape(movieLinks: string[]): Promise<PersonLinksObject> {
-    const delayPerRequest = 100; // delay in milliseconds
+    const delayPerRequest = 100;
+
     const moviePageHtmlArray: any[] = [];
 
     for (const movieLink of movieLinks) {
-      const response = await axiosInstance.get(movieLink);
-      moviePageHtmlArray.push(response.data);
+      try {
+        const response = await axiosInstance.get(movieLink);
+        moviePageHtmlArray.push(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+
       await delay(delayPerRequest);
     }
-    // await movieParser(moviePageHtmlArray, movieLinks);
-    // await getVideos(movieLinks);
-    return getPersonLinks(moviePageHtmlArray);
+
+    try {
+      await movieParser(moviePageHtmlArray, movieLinks);
+      await getVideos(movieLinks);
+      return getPersonLinks(moviePageHtmlArray);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   },
 };
 
