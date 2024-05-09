@@ -21,73 +21,62 @@ export const personParser = async (personLinks: PersonLinksObject) => {
   console.log(`${people.length} people found`);
 };
 
-const scrapeData = async (link: string, retryCount = 3) => {
+const scrapeData = async (link: string) => {
   console.log("scraping ", link);
 
-  // Retry mechanism
-  let attempt = 0;
-  while (attempt < retryCount) {
-    try {
-      const response = await axiosInstance.get(link);
-      const $ = cheerio.load(response.data);
+  try {
+    const response = await axiosInstance.get(link);
+    const $ = cheerio.load(response.data);
 
-      const id = getIDFromLink(link);
-      const name = $("div.title h2.title a").text();
-      const biography = $(
-        "section.full_wrapper div.biography div.content div.text p",
-      ).text();
-      const knowForDepartment = $("section.facts p:contains(Known For)")
+    const id = getIDFromLink(link);
+    const name = $("div.title h2.title a").text();
+    const biography = $(
+      "section.full_wrapper div.biography div.content div.text p",
+    ).text();
+    const knowForDepartment = $("section.facts p:contains(Known For)")
+      .text()
+      .replace("Known For ", "")
+      .trim();
+    const placeOfBirth = $("section.facts p:contains(Place of Birth)")
+      .text()
+      .replace("Place of Birth ", "")
+      .trim();
+    const gender =
+      $("section.facts p:contains(Gender)")
         .text()
-        .replace("Known For ", "")
-        .trim();
-      const placeOfBirth = $("section.facts p:contains(Place of Birth)")
-        .text()
-        .replace("Place of Birth ", "")
-        .trim();
-      const gender =
-        $("section.facts p:contains(Gender)")
-          .text()
-          .replace("Gender ", "")
-          .trim()
-          .toUpperCase() === "FEMALE"
-          ? 1
-          : 2;
-      const birthday = $("section.facts p:contains(Birthday)")
-        .text()
-        .replace("\n", "")
+        .replace("Gender ", "")
         .trim()
-        .replace("Birthday\n", "")
-        .trim()
-        .replace(/ \(.*?\)/, "")
-        .trim();
-      const profilePath = $("section.images.inner div div img").attr("src");
+        .toUpperCase() === "FEMALE"
+        ? 1
+        : 2;
+    const birthday = $("section.facts p:contains(Birthday)")
+      .text()
+      .replace("\n", "")
+      .trim()
+      .replace("Birthday\n", "")
+      .trim()
+      .replace(/ \(.*?\)/, "")
+      .trim();
+    const profilePath = $("section.images.inner div div img").attr("src");
 
-      const movieIDs = await getFilmography(link, "movie");
-      const tvShowIDs = await getFilmography(link, "tv");
+    const movieIDs = await getFilmography(link, "movie");
+    const tvShowIDs = await getFilmography(link, "tv");
 
-      return {
-        id,
-        name,
-        biography,
-        gender,
-        birthday,
-        knowForDepartment,
-        placeOfBirth,
-        profilePath,
-        movieIDs,
-        tvShowIDs,
-      };
-    } catch (error: any) {
-      console.error(`Error scraping ${link}: ${error.message}`);
-      attempt++;
-      if (attempt < retryCount) {
-        console.log(`Retrying ${attempt + 1}/${retryCount}`);
-        await delay(50); // Wait before retrying
-      } else {
-        console.error(`Failed to scrape ${link} after ${retryCount} attempts`);
-        throw error; // Rethrow the error if retries are exhausted
-      }
-    }
+    return {
+      id,
+      name,
+      biography,
+      gender,
+      birthday,
+      knowForDepartment,
+      placeOfBirth,
+      profilePath,
+      movieIDs,
+      tvShowIDs,
+    };
+  } catch (error: any) {
+    console.error(`Error scraping ${link}: ${error.message}`);
+    throw error;
   }
 };
 
