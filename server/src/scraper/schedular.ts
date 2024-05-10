@@ -1,5 +1,5 @@
 import { scrapeContext } from "./context";
-import { lastScrapeTime, updateLastScrapeTime } from "./config";
+import { lastScrapeTime, updateLastScrapeTime } from "./utils/lastScrapeTime";
 
 const performScrapingAndUpdateLastScrapeTime = async () => {
   await scrapeContext();
