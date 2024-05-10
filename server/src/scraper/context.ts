@@ -14,7 +14,7 @@ const scrapeDataUsingStrategy = async (
 
 const popularPageLink = `/movie`;
 
-(async () => {
+export const scrapeContext = async () => {
   const movieLinks: string[] = await scrapeDataUsingStrategy(
     scrapePopularPageStrategy,
     popularPageLink,
@@ -31,4 +31,4 @@ const popularPageLink = `/movie`;
     personLinks.castLinks.length + personLinks.crewLinks.length,
   );
   await scrapeDataUsingStrategy(scrapePersonStrategy, personLinks);
-})();
+};

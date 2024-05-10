@@ -29,8 +29,8 @@ export const scrapeMovieStrategy: ScrapeStrategy = {
     }
 
     try {
-      await movieParser(moviePageHtmlArray, movieLinks);
-      await getVideos(movieLinks);
+      // await movieParser(moviePageHtmlArray, movieLinks);
+      // await getVideos(movieLinks);
       return getPersonLinks(moviePageHtmlArray);
     } catch (error) {
       console.error(error);
@@ -41,7 +41,7 @@ export const scrapeMovieStrategy: ScrapeStrategy = {
 
 export const scrapePersonStrategy: ScrapeStrategy = {
   async scrape(personLinks: PersonLinksObject): Promise<any> {
-    await personParser(personLinks);
+    // await personParser(personLinks);
     return Promise.resolve;
   },
 };
