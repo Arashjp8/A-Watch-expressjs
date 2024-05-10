@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import moviesRoutes from "./routes/moviesRoutes";
 import searchRoutes from "./routes/searchRoutes";
 import tvShowsRoutes from "./routes/tvShowsRoutes";
+import { scrapeScheduler } from "./scraper/schedular";
 
 console.clear();
 // process.stdout.clearScreenDown();
@@ -35,11 +36,18 @@ app.use("/api/search", searchRoutes);
 // MONGOOSE SERVER
 const PORT = process.env.PORT || 6001;
 // Attention - Hybrid MongoDB Atlas Cluster
-mongoose.connect(process.env.MONGO_LOCAL_URI || "").then(() => {
+mongoose.connect(process.env.MONGO_LOCAL_URI || "").then(async () => {
   console.log(
     `[server]: Connected to MongoDB Atlas on ${process.env.MONGO_LOCAL_URI}`,
   );
+
+  await startServer();
+});
+
+const startServer = async () => {
+  await scrapeScheduler();
+
   app.listen(PORT, () =>
     console.log(`[server]: Server is running at http://localhost:${PORT}`),
   );
-});
+};

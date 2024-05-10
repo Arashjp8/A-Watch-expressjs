@@ -1,6 +1,8 @@
 import * as cheerio from "cheerio";
 import { Video } from "../interface";
+import { VideoModel } from "../../models/VideoModel";
 import { axiosInstance } from "../utils/axiosInstance";
+import { getIDFromLink } from "../config";
 
 export const getVideos = async (movieLinks: string[]) => {
   const navItems = [
@@ -47,6 +49,16 @@ export const getVideos = async (movieLinks: string[]) => {
     }
 
     // TODO - Add videos to database with movie ID
+    const movieID = getIDFromLink(movieLink);
+    const existingVideos = await VideoModel.find({ _id: movieID });
+
+    if (existingVideos) {
+      console.log("Videos already stored for movie: ", movieID);
+    } else {
+      const videoDocument = new VideoModel({ _id: movieID, videos });
+      await videoDocument.save();
+      console.log("Videos stored for movie: ", movieID);
+    }
 
     console.log(`videos for ${movieLink}: `, videos);
   }

@@ -3,7 +3,7 @@ import { MovieSchema } from "./MovieModel";
 import { TvShowSchema } from "./TvShowModel";
 
 const PersonSchema = new mongoose.Schema({
-  id: String,
+  _id: String,
   name: String,
   movieIDs: [String],
   tvShowIDs: [String],
@@ -14,9 +14,6 @@ const PersonSchema = new mongoose.Schema({
   placeOfBirth: String,
   profilePath: String,
 });
-
-// PersonSchema.path("movies").schema.path("type").schema = MovieSchema;
-// PersonSchema.path("tvShows").schema.path("type").schema = TvShowSchema;
 
 type Person = mongoose.InferSchemaType<typeof PersonSchema>;
 

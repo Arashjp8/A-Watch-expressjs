@@ -24,6 +24,6 @@ const checkIfTimeToScrape = async () => {
   }
 };
 
-(async () => {
+export const scrapeScheduler = async () => {
   await checkIfTimeToScrape();
-})();
+};

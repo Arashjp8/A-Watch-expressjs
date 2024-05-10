@@ -3,20 +3,28 @@ import { getIDFromLink } from "../config";
 import * as cheerio from "cheerio";
 import { axiosInstance } from "../utils/axiosInstance";
 import { delay, DELAY_TIME_IN_MS } from "../utils/delayService";
+import { PersonModel } from "../../models/PersonModel";
 
 export const personParser = async (personLinks: PersonLinksObject) => {
-  let people: any[] = [];
-
+  let counter = 0;
   for (const crewLink of personLinks.crewLinks) {
     await delay(DELAY_TIME_IN_MS);
-    people.push(await scrapeData(crewLink));
+    const personData = await scrapeData(crewLink);
+    console.log("personData: ", personData);
+    const id = getIDFromLink(crewLink);
+    await savePersonToDB(id, personData);
+    counter++;
   }
   for (const castLink of personLinks.castLinks) {
     await delay(DELAY_TIME_IN_MS);
-    people.push(await scrapeData(castLink));
+    const personData = await scrapeData(castLink);
+    console.log("personData: ", personData);
+    const id = getIDFromLink(castLink);
+    await savePersonToDB(id, personData);
+    counter++;
   }
-  console.log("scraped people", people);
-  console.log(`${people.length} people found`);
+
+  console.log("personParser finished scraping ", counter, " people");
 };
 
 const scrapeData = async (link: string) => {
@@ -27,7 +35,7 @@ const scrapeData = async (link: string) => {
     .then(async (response) => {
       const $ = cheerio.load(response.data);
 
-      const id = getIDFromLink(link);
+      // const id = getIDFromLink(link);
       const name = $("div.title h2.title a").text();
       const biography = $(
         "section.full_wrapper div.biography div.content div.text p",
@@ -66,7 +74,6 @@ const scrapeData = async (link: string) => {
       return Promise.all(getFilmographyPromises).then(
         ([movieIDs, tvShowIDs]) => {
           return {
-            id,
             name,
             biography,
             gender,
@@ -113,4 +120,17 @@ const getFilmography = async (
 
       throw error;
     });
+};
+
+const savePersonToDB = async (id: string, personData: any) => {
+  const existingPerson = await PersonModel.findOne({ id });
+
+  if (existingPerson) {
+    console.log(`Person with id ${id} already exists in DB`);
+  } else {
+    const newPerson = new PersonModel(personData);
+    newPerson._id = id;
+    await newPerson.save();
+    console.log(`Person with id ${id} saved to DB`);
+  }
 };

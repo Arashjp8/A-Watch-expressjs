@@ -10,6 +10,7 @@ import * as cheerio from "cheerio";
 import { parseDateAndLanguage } from "../utils/dateAndLanguageUtil";
 import { organizePeople } from "../utils/crewUtil";
 import { parseGenres } from "../utils/genresUtil";
+import { MovieModel } from "../../models/MovieModel";
 
 export const movieParser = async (
   moviePageHtmlArray: any[],
@@ -35,7 +36,6 @@ export const movieParser = async (
     const movieID = getIDFromLink(movieLinks[i]);
 
     const movieObject = {
-      movieID,
       title,
       releaseDate,
       originalLanguage,
@@ -48,7 +48,17 @@ export const movieParser = async (
       backdropPath,
     };
 
-    // TODO - Add movie to database
+    // Add movie to database if it doesn't exist in DB
+    const existingMovie = await MovieModel.findOne({ _id: movieID });
+
+    if (existingMovie) {
+      console.log(`movie ${movieID} already exists in database`);
+    } else {
+      const newMovie = new MovieModel(movieObject);
+      newMovie._id = movieID;
+      await newMovie.save();
+      console.log(`movie ${movieID} added to database`);
+    }
 
     console.log(`movie ${movieID} info: `, movieObject);
   }
