@@ -9,22 +9,43 @@ export const personParser = async (personLinks: PersonLinksObject) => {
   let counter = 0;
   for (const crewLink of personLinks.crewLinks) {
     await delay(DELAY_TIME_IN_MS);
-    const personData = await scrapeData(crewLink);
-    console.log("personData: ", personData);
     const id = getIDFromLink(crewLink);
-    await savePersonToDB(id, personData);
+    const personExistInDB = await checkPersonExist(id);
+    console.log(personExistInDB);
+
+    switch (personExistInDB) {
+      case false:
+        const personData = await scrapeData(crewLink);
+        console.log("personData: ", personData);
+        await savePersonToDB(id, personData);
+        break;
+      default:
+        console.log(`❌ Person with id ${id} already exists in DB \n`);
+        break;
+    }
+
     counter++;
   }
   for (const castLink of personLinks.castLinks) {
     await delay(DELAY_TIME_IN_MS);
-    const personData = await scrapeData(castLink);
-    console.log("personData: ", personData);
     const id = getIDFromLink(castLink);
-    await savePersonToDB(id, personData);
+    const personExistInDB = await checkPersonExist(id);
+    console.log(personExistInDB);
+
+    switch (personExistInDB) {
+      case false:
+        const personData = await scrapeData(castLink);
+        console.log("personData: ", personData);
+        await savePersonToDB(id, personData);
+        break;
+      default:
+        console.log(`❌ Person with id ${id} already exists in DB \n`);
+        break;
+    }
     counter++;
   }
 
-  console.log("personParser finished scraping ", counter, " people");
+  console.log("👤 personParser finished scraping ", counter, " people \n");
 };
 
 const scrapeData = async (link: string) => {
@@ -122,15 +143,16 @@ const getFilmography = async (
     });
 };
 
-const savePersonToDB = async (id: string, personData: any) => {
+const savePersonToDB = async (id: string, personData: any): Promise<void> => {
+  const newPerson = new PersonModel(personData);
+  newPerson._id = id;
+  await newPerson.save();
+  console.log(`✅ Person with id ${id} saved to DB \n`);
+};
+
+const checkPersonExist = async (id: string): Promise<boolean> => {
   const existingPerson = await PersonModel.findOne({ _id: id });
 
-  if (existingPerson) {
-    console.log(`❌ Person with id ${id} already exists in DB \n`);
-  } else {
-    const newPerson = new PersonModel(personData);
-    newPerson._id = id;
-    await newPerson.save();
-    console.log(`✅ Person with id ${id} saved to DB \n`);
-  }
+  // return true if person exist in DB and false if not
+  return !!existingPerson;
 };
