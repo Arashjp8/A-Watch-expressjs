@@ -19,7 +19,11 @@ export const movieParser = async (
   for (let i = 0; i < moviePageHtmlArray.length; i++) {
     const $ = cheerio.load(moviePageHtmlArray[i]);
 
-    const title = $(titleCssPath).text().trim();
+    const title = $(`div.title a[href=${movieLinks[i]}]`)
+      .text()
+      .trim()
+      .replace(/\(\d{4}\)$/, "")
+      .trim();
     const { releaseDate, originalLanguage } = parseDateAndLanguage(
       $(releaseDateCssPath).text().trim(),
     );
