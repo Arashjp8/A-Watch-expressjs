@@ -5,47 +5,41 @@ import { axiosInstance } from "../utils/axiosInstance";
 import { delay, DELAY_TIME_IN_MS } from "../utils/delayService";
 import { PersonModel } from "../../models/PersonModel";
 
-export const personParser = async (personLinks: PersonLinksObject) => {
+export const personParser = async (
+  personLinks: PersonLinksObject,
+): Promise<void> => {
   let counter = 0;
-  for (const crewLink of personLinks.crewLinks) {
-    await delay(DELAY_TIME_IN_MS);
-    const id = getIDFromLink(crewLink);
-    const personExistInDB = await checkPersonExist(id);
-    console.log(personExistInDB);
 
-    switch (personExistInDB) {
-      case false:
-        const personData = await scrapeData(crewLink);
-        console.log("personData: ", personData);
-        await savePersonToDB(id, personData);
-        break;
-      default:
-        console.log(`❌ Person with id ${id} already exists in DB \n`);
-        break;
-    }
-
-    counter++;
-  }
-  for (const castLink of personLinks.castLinks) {
-    await delay(DELAY_TIME_IN_MS);
-    const id = getIDFromLink(castLink);
-    const personExistInDB = await checkPersonExist(id);
-    console.log(personExistInDB);
-
-    switch (personExistInDB) {
-      case false:
-        const personData = await scrapeData(castLink);
-        console.log("personData: ", personData);
-        await savePersonToDB(id, personData);
-        break;
-      default:
-        console.log(`❌ Person with id ${id} already exists in DB \n`);
-        break;
-    }
-    counter++;
-  }
+  counter += await handlePersonDataFromLinks(personLinks.crewLinks);
+  counter += await handlePersonDataFromLinks(personLinks.castLinks);
 
   console.log("👤 personParser finished scraping ", counter, " people \n");
+};
+
+const handlePersonDataFromLinks = async (links: string[]): Promise<number> => {
+  let counter = 0;
+  console.log("handlePersonDataFromLinks: ", links);
+  for (let link of links) {
+    await delay(DELAY_TIME_IN_MS);
+    console.log("link: ", link);
+    const id = getIDFromLink(link);
+    console.log("id: ", id);
+    const personExistInDB = await checkPersonExist(id);
+    console.log("personExistInDB: ", personExistInDB);
+
+    switch (personExistInDB) {
+      case false:
+        const personData = await scrapeData(link);
+        console.log("personData: ", personData);
+        await savePersonToDB(id, personData);
+        break;
+      default:
+        console.log(`❌ Person with id ${id} already exists in DB \n`);
+        break;
+    }
+    counter++;
+  }
+  return counter;
 };
 
 const scrapeData = async (link: string) => {
@@ -56,7 +50,6 @@ const scrapeData = async (link: string) => {
     .then(async (response) => {
       const $ = cheerio.load(response.data);
 
-      // const id = getIDFromLink(link);
       const name = $("div.title h2.title a").text();
       const biography = $(
         "section.full_wrapper div.biography div.content div.text p",
