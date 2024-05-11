@@ -53,11 +53,11 @@ export const getVideos = async (movieLinks: string[]) => {
     const existingVideos = await VideoModel.find({ _id: movieID });
 
     if (existingVideos) {
-      console.log("Videos already stored for movie: ", movieID);
+      console.log("❌ Videos already stored in DB for movie: ", movieID);
     } else {
       const videoDocument = new VideoModel({ _id: movieID, videos });
       await videoDocument.save();
-      console.log("Videos stored for movie: ", movieID);
+      console.log("✅ Videos stored in DB for movie: ", movieID);
     }
 
     console.log(`videos for ${movieLink}: `, videos);

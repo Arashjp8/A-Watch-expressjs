@@ -123,14 +123,14 @@ const getFilmography = async (
 };
 
 const savePersonToDB = async (id: string, personData: any) => {
-  const existingPerson = await PersonModel.findOne({ id });
+  const existingPerson = await PersonModel.findOne({ _id: id });
 
   if (existingPerson) {
-    console.log(`Person with id ${id} already exists in DB`);
+    console.log(`❌ Person with id ${id} already exists in DB \n`);
   } else {
     const newPerson = new PersonModel(personData);
     newPerson._id = id;
     await newPerson.save();
-    console.log(`Person with id ${id} saved to DB`);
+    console.log(`✅ Person with id ${id} saved to DB \n`);
   }
 };

@@ -56,14 +56,14 @@ export const movieParser = async (
     const existingMovie = await MovieModel.findOne({ _id: movieID });
 
     if (existingMovie) {
-      console.log(`movie ${movieID} already exists in database`);
+      console.log(`❌ movie ${movieID} already exists in database`);
     } else {
       const newMovie = new MovieModel(movieObject);
       newMovie._id = movieID;
       await newMovie.save();
-      console.log(`movie ${movieID} added to database`);
+      console.log(`✅ movie ${movieID} added to database`);
     }
 
-    console.log(`movie ${movieID} info: `, movieObject);
+    console.log(`movie ${movieID} info: `, movieObject, "\n");
   }
 };
