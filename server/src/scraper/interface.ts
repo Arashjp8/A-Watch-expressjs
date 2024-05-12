@@ -13,7 +13,7 @@ export interface People {
 }
 
 export interface Video {
-  id: string;
+  videoID: string;
   name: string;
   key: string;
   site: string;

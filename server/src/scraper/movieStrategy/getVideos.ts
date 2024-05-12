@@ -1,21 +1,12 @@
 import * as cheerio from "cheerio";
 import { Video } from "../interface";
-import { VideoModel } from "../../models/VideoModel";
+import { VideoDocument, VideoModel } from "../../models/VideoModel";
 import { axiosInstance } from "../utils/axiosInstance";
 import { getIDFromLink } from "../config";
 
-export const getVideos = async (movieLinks: string[]) => {
-  const navItems = [
-    "Trailers",
-    "Teasers",
-    "Clips",
-    "Behind the Scenes",
-    "Blooper",
-    "Featurettes",
-  ];
-
+export const getVideos = async (movieLinks: string[]): Promise<void> => {
   for (const movieLink of movieLinks) {
-    const videos: Video[] = await scrapeVideoPage(movieLink, navItems);
+    const videos: Video[] = await scrapeVideoPage(movieLink);
 
     // Add videos to database if they don't exist
     const movieID = getIDFromLink(movieLink);
@@ -34,18 +25,25 @@ export const getVideos = async (movieLinks: string[]) => {
   }
 };
 
-const scrapeVideoPage = async (
-  movieLink: string,
-  navItems: string[],
-): Promise<Video[]> => {
+const scrapeVideoPage = async (movieLink: string): Promise<Video[]> => {
+  const navItems = [
+    "Trailers",
+    "Teasers",
+    "Clips",
+    "Behind the Scenes",
+    "Blooper",
+    "Featurettes",
+  ];
+
   let videos: Video[] = [];
+
   for (const navItem of navItems) {
     const response = await axiosInstance.get(
       `${movieLink}/videos?active_nav_item=${navItem}`,
     );
     const $ = cheerio.load(response.data);
     $("section.panel.video").each((_, element) => {
-      const id = $(element).find("div.video.card").attr("id");
+      const videoID = $(element).find("div.video.card").attr("id");
       const name = $(element).find("div.video.card div a").attr("data-title");
       const key = $(element).find("div.video.card div a").attr("data-id");
       const site = $(element).find("div.video.card div a").attr("data-site");
@@ -55,9 +53,9 @@ const scrapeVideoPage = async (
       // removing 's' from the end of the navItem
       const type = navItem.slice(0, -1);
 
-      if (id && name && key && site && publishedAt) {
-        const videoObj = {
-          id,
+      if (videoID && name && key && site && publishedAt) {
+        const videoObj: Video = {
+          videoID,
           name,
           key,
           site,
@@ -69,18 +67,23 @@ const scrapeVideoPage = async (
       }
     });
   }
+  console.log("Videos scraped for movie: ", movieLink);
   return videos;
 };
 
-const checkVideosExist = async (movieID: string) => {
+const checkVideosExist = async (movieID: string): Promise<boolean> => {
   const existingVideos = await VideoModel.find({ _id: movieID });
+  console.log(existingVideos);
 
   // If the movieID is not found in the database, return false otherwise return true
-  return !!existingVideos;
+  return existingVideos.length !== 0;
 };
 
-const saveVideosToDB = async (movieID: string, videos: Video[]) => {
-  const videoDocument = new VideoModel({ _id: movieID, videos });
+const saveVideosToDB = async (
+  movieID: string,
+  videos: Video[],
+): Promise<void> => {
+  const videoDocument: VideoDocument = new VideoModel({ _id: movieID, videos });
   await videoDocument.save();
   console.log("✅ Videos stored in DB for movie: ", movieID);
   console.log("Video document: ", videoDocument, "\n");
