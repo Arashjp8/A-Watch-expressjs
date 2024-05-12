@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { Video } from "../scraper/interface";
 
 const VideoSchema = new mongoose.Schema({
-  videoID: String,
+  _id: String,
   name: String,
   key: String,
   site: String,

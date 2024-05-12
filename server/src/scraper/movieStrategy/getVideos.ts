@@ -55,7 +55,7 @@ const scrapeVideoPage = async (movieLink: string): Promise<Video[]> => {
 
       if (videoID && name && key && site && publishedAt) {
         const videoObj: Video = {
-          videoID,
+          _id: videoID,
           name,
           key,
           site,
