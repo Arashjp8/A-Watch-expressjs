@@ -30,7 +30,7 @@ export const scrapeMovieStrategy: ScrapeStrategy = {
 
     try {
       await movieParser(moviePageHtmlArray, movieLinks);
-      // await getVideos(movieLinks);
+      await getVideos(movieLinks);
       return getPersonLinks(moviePageHtmlArray);
     } catch (error) {
       console.error(error);
