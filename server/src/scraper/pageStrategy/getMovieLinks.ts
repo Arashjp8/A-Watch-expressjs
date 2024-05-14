@@ -3,7 +3,8 @@ import { axiosInstance } from "../utils/axiosInstance";
 import { delay, DELAY_TIME_IN_MS } from "../utils/delayService";
 
 export const getMovieLinks = async (pageLink: string) => {
-  const totalPages = 1;
+  // TODO: scrape until page 20
+  const totalPages = 10;
   const movieLinks: string[] = [];
 
   for (let page = 1; page <= totalPages; page++) {

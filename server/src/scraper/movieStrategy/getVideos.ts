@@ -75,7 +75,7 @@ const checkVideosExist = async (movieID: string): Promise<boolean> => {
   const existingVideos = await VideoModel.find({ _id: movieID });
   console.log(existingVideos);
 
-  // If the movieID is not found in the database, return false otherwise return true
+  // If the length of the array is 0, then the movie doesn't exist in the DB
   return existingVideos.length !== 0;
 };
 

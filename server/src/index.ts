@@ -45,7 +45,7 @@ mongoose.connect(process.env.MONGO_LOCAL_URI || "").then(async () => {
 });
 
 const startServer = async () => {
-  await scrapeScheduler();
+  // await scrapeScheduler();
 
   app.listen(PORT, () =>
     console.log(`[server]: Server is running at http://localhost:${PORT}`),

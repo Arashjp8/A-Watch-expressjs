@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import { MovieSchema } from "./MovieModel";
-import { TvShowSchema } from "./TvShowModel";
 
 const PersonSchema = new mongoose.Schema({
   _id: String,
