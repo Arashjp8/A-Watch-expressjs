@@ -2,6 +2,11 @@ import { Request, Response } from "express";
 import { MovieModel } from "../models/MovieModel";
 import { PersonModel } from "../models/PersonModel";
 
+const handleDataBaseError = (res: Response, message: string, err: any) => {
+  console.error(message, err);
+  res.status(500).send(JSON.stringify({ message }));
+};
+
 export const getTrendingMovies = async (req: Request, res: Response) => {
   // await handleFetchRequest("/trending/movie/day", res);
 };
@@ -13,8 +18,7 @@ export const getPopularMovies = async (req: Request, res: Response) => {
 
     res.status(200).send(movies);
   } catch (err) {
-    console.error("Error fetching movies: ", err);
-    res.status(500).send(JSON.stringify({ message: "Error fetching movies" }));
+    handleDataBaseError(res, "Error fetching popular movies ", err);
   }
 };
 
@@ -32,9 +36,17 @@ export const getMovieById = async (req: Request, res: Response) => {
     console.log(movie);
     res.status(200).send(movie);
   } catch (err: any) {
-    console.error("Error fetching movie: ", err.message);
-    res.status(500).send(JSON.stringify({ message: "Error fetching movie" }));
+    handleDataBaseError(res, "Error fetching movie: ", err.message);
   }
+};
+
+const getPersonDetails = (members: any, persons: any) => {
+  return members
+    .map((member: any) => {
+      const person = persons.find((p: any) => p._id.toString() === member.id);
+      return person ? { ...person.toObject(), role: member.role } : null;
+    })
+    .filter(Boolean);
 };
 
 export const getMovieCredits = async (req: Request, res: Response) => {
@@ -52,23 +64,11 @@ export const getMovieCredits = async (req: Request, res: Response) => {
 
     const persons = await PersonModel.find({ _id: { $in: personIDs } });
 
-    const cast = movie.cast
-      .map((member) => {
-        const person = persons.find((p) => p.id.toString() === member.id);
-        return person ? { ...person.toObject(), role: member.role } : null;
-      })
-      .filter(Boolean);
-
-    const crew = movie.crew
-      .map((member) => {
-        const person = persons.find((p) => p.id.toString() === member.id);
-        return person ? { ...person.toObject(), role: member.role } : null;
-      })
-      .filter(Boolean);
+    const cast = getPersonDetails(movie.cast, persons);
+    const crew = getPersonDetails(movie.crew, persons);
 
     res.status(200).json({ cast, crew });
   } catch (err) {
-    console.error("Error fetching movie credits: ", err);
-    res.status(500).json({ message: "Error fetching movie credits" });
+    handleDataBaseError(res, "Error fetching movie credits: ", err);
   }
 };
