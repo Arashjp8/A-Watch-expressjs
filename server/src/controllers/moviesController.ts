@@ -1,11 +1,6 @@
 import { Request, Response } from "express";
-import { handleFetchRequest } from "../services/apiUrl";
 import { MovieModel } from "../models/MovieModel";
-
-// TODO - maybe a web scarper to get the data from TMDB
-//  or an interval to fetch the data from TMDB weekly
-
-const storeMoviesInMongoDB = async () => {};
+import { PersonModel } from "../models/PersonModel";
 
 export const getTrendingMovies = async (req: Request, res: Response) => {
   // await handleFetchRequest("/trending/movie/day", res);
@@ -42,6 +37,38 @@ export const getMovieById = async (req: Request, res: Response) => {
   }
 };
 
-export const getMovieCredits = (req: Request, res: Response) => {
-  // res.status(200).send(credits);
+export const getMovieCredits = async (req: Request, res: Response) => {
+  const movieID = req.params.id;
+
+  try {
+    const movie = await MovieModel.findOne({ _id: movieID });
+    if (!movie) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+
+    const castIDs = movie.cast.map((member) => member.id);
+    const crewIDs = movie.crew.map((member) => member.id);
+    const personIDs = [...new Set([...castIDs, ...crewIDs])]; // Unique IDs
+
+    const persons = await PersonModel.find({ _id: { $in: personIDs } });
+
+    const cast = movie.cast
+      .map((member) => {
+        const person = persons.find((p) => p.id.toString() === member.id);
+        return person ? { ...person.toObject(), role: member.role } : null;
+      })
+      .filter(Boolean);
+
+    const crew = movie.crew
+      .map((member) => {
+        const person = persons.find((p) => p.id.toString() === member.id);
+        return person ? { ...person.toObject(), role: member.role } : null;
+      })
+      .filter(Boolean);
+
+    res.status(200).json({ cast, crew });
+  } catch (err) {
+    console.error("Error fetching movie credits: ", err);
+    res.status(500).json({ message: "Error fetching movie credits" });
+  }
 };
