@@ -4,7 +4,7 @@ import { delay, DELAY_TIME_IN_MS } from "../utils/delayService";
 
 export const getMovieLinks = async (pageLink: string) => {
   // TODO: scrape until page 20
-  const totalPages = 10;
+  const totalPages = 1;
   const movieLinks: string[] = [];
 
   for (let page = 1; page <= totalPages; page++) {

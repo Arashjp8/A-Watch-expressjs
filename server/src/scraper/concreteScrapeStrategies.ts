@@ -6,6 +6,8 @@ import { getVideos } from "./movieStrategy/getVideos";
 import { personParser } from "./personStrategy/personParser";
 import { axiosInstance } from "./utils/axiosInstance";
 import { delay, DELAY_TIME_IN_MS } from "./utils/delayService";
+import { getIDFromLink } from "./config";
+import { MovieModel } from "../models/MovieModel";
 
 export const scrapePopularPageStrategy: ScrapeStrategy = {
   async scrape(pageLink: string): Promise<string[]> {
@@ -18,9 +20,16 @@ export const scrapeMovieStrategy: ScrapeStrategy = {
     const moviePageHtmlArray: any[] = [];
 
     for (const movieLink of movieLinks) {
+      const movieID = getIDFromLink(movieLink);
       try {
-        const response = await axiosInstance.get(movieLink);
-        moviePageHtmlArray.push(response.data);
+        const existingMovie = await MovieModel.findOne({ _id: movieID });
+
+        if (existingMovie) {
+          console.log(`❌ movie ${movieID} already exists in database`);
+        } else {
+          const response = await axiosInstance.get(movieLink);
+          moviePageHtmlArray.push(response.data);
+        }
       } catch (error) {
         console.error(error);
       }
