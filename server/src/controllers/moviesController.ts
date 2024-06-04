@@ -11,8 +11,7 @@ export const getTrendingMovies = async (req: Request, res: Response) => {
   // await handleFetchRequest("/trending/movie/day", res);
 };
 
-export const getPopularMovies = async (res: Response) => {
-  // await handleFetchRequest("/movie/popular", res);
+export const getPopularMovies = async (req: Request, res: Response) => {
   try {
     const movies = await MovieModel.find({});
 
