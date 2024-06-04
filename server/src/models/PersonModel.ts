@@ -3,14 +3,14 @@ import mongoose from "mongoose";
 const PersonSchema = new mongoose.Schema({
   _id: String,
   name: String,
-  movieIDs: [String],
-  tvShowIDs: [String],
+  movie_IDs: [String],
+  tvshow_IDs: [String],
   biography: String,
   gender: Number,
-  knownForDepartment: String,
+  known_for_department: String,
   birthday: String,
-  placeOfBirth: String,
-  profilePath: String,
+  place_of_birth: String,
+  profile_path: String,
 });
 
 type Person = mongoose.InferSchemaType<typeof PersonSchema>;

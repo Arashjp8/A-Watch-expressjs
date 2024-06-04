@@ -6,7 +6,7 @@ const VideoSchema = new mongoose.Schema({
   name: String,
   key: String,
   site: String,
-  publishedAt: String,
+  published_at: String,
   type: String,
 });
 

@@ -9,7 +9,7 @@ import * as cheerio from "cheerio";
 import { parseDateAndLanguage } from "../utils/dateAndLanguageUtil";
 import { organizePeople } from "../utils/crewUtil";
 import { parseGenres } from "../utils/genresUtil";
-import { MovieModel } from "../../models/MovieModel";
+import { Movie, MovieModel } from "../../models/MovieModel";
 
 export const movieParser = async (
   moviePageHtmlArray: any[],
@@ -42,7 +42,7 @@ const movieObjectScraper = async (
   moviePageHtml: any,
   movieLinks: string[],
   index: number,
-) => {
+): Promise<Movie> => {
   const $ = cheerio.load(moviePageHtml);
 
   const title = $(`div.title a[href=${movieLinks[index]}]`)
@@ -66,14 +66,14 @@ const movieObjectScraper = async (
 
   return {
     title,
-    releaseDate,
-    originalLanguage,
-    voteAverage,
+    release_date: releaseDate,
+    original_language: originalLanguage,
+    vote_average: voteAverage,
     overview,
     crew,
     cast,
     genres,
-    posterPath,
-    backdropPath,
+    poster_path: posterPath,
+    backdrop_path: backdropPath,
   };
 };

@@ -1,13 +1,13 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Movie } from "../interfaces/Movie";
 import apiClient, { FetchResponse } from "../services/apiClient";
-import { popularMovieAPIURL } from "../services/config";
+//import { popularMovieAPIURL } from "../services/config";
 
 const usePopularMovies = () => {
   return useInfiniteQuery<FetchResponse<Movie>, Error>({
     queryKey: ["popular-movies"],
     queryFn: ({ pageParam = 1 }) =>
-      apiClient(popularMovieAPIURL, {
+      apiClient("http://localhost:3001/api/movie/popular", {
         params: {
           page: pageParam,
         },

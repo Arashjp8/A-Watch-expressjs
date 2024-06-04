@@ -59,7 +59,7 @@ const scrapeVideoPage = async (movieLink: string): Promise<Video[]> => {
           name,
           key,
           site,
-          publishedAt,
+          published_at: publishedAt,
           type,
         };
 

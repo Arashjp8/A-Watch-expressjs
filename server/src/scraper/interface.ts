@@ -17,6 +17,6 @@ export interface Video {
   name: string;
   key: string;
   site: string;
-  publishedAt: string;
+  published_at: string;
   type: string;
 }

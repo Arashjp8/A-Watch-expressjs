@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Movie } from "../../interfaces/Movie";
+import { Movie, MovieMyAPI } from "../../interfaces/Movie";
 import { TvShow } from "../../interfaces/TvShow";
 import ImageComponent from "../ImageComponent";
 import Gauge from "../gauge/Gauge";
@@ -16,8 +16,8 @@ interface Props {
   styleProp?: string;
 }
 
-export const isMovie = (data: Movie | TvShow): data is Movie => {
-  return (data as Movie).title !== undefined;
+export const isMovie = (data: Movie | MovieMyAPI | TvShow): data is Movie => {
+  return ((data as Movie) || (data as MovieMyAPI)).title !== undefined;
 };
 
 const ContentVerticalCard = ({

@@ -3,9 +3,9 @@ import HorizontalScroll from "../components/HorizontalScroll";
 import Section from "../components/Section";
 import Spinner from "../components/Spinner";
 import usePopularMovies from "../hooks/usePopularMovies";
-import usePopularTvShows from "../hooks/usePopularTvShows";
 import useTrendingMovies from "../hooks/useTrendingMovies";
-import useTrendingTvShows from "../hooks/useTrendingTvShows";
+//import usePopularTvShows from "../hooks/usePopularTvShows";
+//import useTrendingTvShows from "../hooks/useTrendingTvShows";
 
 const Home = () => {
   const sections = [
@@ -19,16 +19,16 @@ const Home = () => {
       link: "/movies",
       hookResponse: usePopularMovies(),
     },
-    {
-      title: "Trending Tv Shows",
-      link: "/trending/tvshows",
-      hookResponse: useTrendingTvShows(),
-    },
-    {
-      title: "Tv Shows",
-      link: "/tvshows",
-      hookResponse: usePopularTvShows(),
-    },
+    //{
+    //  title: "Trending Tv Shows",
+    //  link: "/trending/tvshows",
+    //  hookResponse: useTrendingTvShows(),
+    //},
+    //{
+    //  title: "Tv Shows",
+    //  link: "/tvshows",
+    //  hookResponse: usePopularTvShows(),
+    //},
   ];
 
   return (

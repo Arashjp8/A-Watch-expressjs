@@ -3,15 +3,15 @@ import mongoose from "mongoose";
 const MovieSchema = new mongoose.Schema({
   _id: String,
   title: String,
-  voteAverage: Number,
-  backdropPath: {
+  vote_average: Number,
+  backdrop_path: {
     type: String,
     default: "",
   },
   overview: String,
-  posterPath: String,
-  releaseDate: String,
-  originalLanguage: String,
+  poster_path: String,
+  release_date: String,
+  original_language: String,
   genres: [String],
   cast: [{}],
   crew: [{}],

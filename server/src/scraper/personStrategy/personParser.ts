@@ -54,11 +54,11 @@ const scrapeData = async (link: string) => {
       const biography = $(
         "section.full_wrapper div.biography div.content div.text p",
       ).text();
-      const knowForDepartment = $("section.facts p:contains(Known For)")
+      const known_for_department = $("section.facts p:contains(Known For)")
         .text()
         .replace("Known For ", "")
         .trim();
-      const placeOfBirth = $("section.facts p:contains(Place of Birth)")
+      const place_of_birth = $("section.facts p:contains(Place of Birth)")
         .text()
         .replace("Place of Birth ", "")
         .trim();
@@ -78,7 +78,7 @@ const scrapeData = async (link: string) => {
         .trim()
         .replace(/ \(.*?\)/, "")
         .trim();
-      const profilePath = $("section.images.inner div div img").attr("src");
+      const profile_path = $("section.images.inner div div img").attr("src");
 
       const getFilmographyPromises = [
         await getFilmography(link, "movie"),
@@ -86,17 +86,17 @@ const scrapeData = async (link: string) => {
       ];
 
       return Promise.all(getFilmographyPromises).then(
-        ([movieIDs, tvShowIDs]) => {
+        ([movie_IDs, tvshow_IDs]) => {
           return {
             name,
             biography,
             gender,
             birthday,
-            knowForDepartment,
-            placeOfBirth,
-            profilePath,
-            movieIDs,
-            tvShowIDs,
+            known_for_department,
+            place_of_birth,
+            profile_path,
+            movie_IDs,
+            tvshow_IDs,
           };
         },
       );

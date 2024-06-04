@@ -14,3 +14,17 @@ export interface Movie {
   production_companies: Companies[];
   status: string;
 }
+
+export interface MovieMyAPI {
+  _id: number;
+  title: string;
+  overview: string;
+  backdrop_path: string;
+  poster_path: string;
+  vote_average: number;
+  release_date: string;
+  media_type: string;
+  genres: Genre[];
+  production_companies: Companies[];
+  status: string;
+}

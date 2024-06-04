@@ -1,8 +1,8 @@
-import { Movie } from "../../interfaces/Movie";
+import { Movie, MovieMyAPI } from "../../interfaces/Movie";
 import { TvShow } from "../../interfaces/TvShow";
 
 interface Props {
-  data?: Movie | TvShow;
+  data?: Movie | MovieMyAPI | TvShow;
   size: number;
 }
 const Gauge = ({ data, size }: Props) => {
@@ -14,12 +14,12 @@ const Gauge = ({ data, size }: Props) => {
     size === 4
       ? "w-14 h-14 text-xl"
       : size === 3
-      ? "w-10 h-10 xl:w-14 xl:h-14 xl:text-xl"
-      : size === 2
-      ? "w-12 h-12"
-      : size === 1
-      ? "w-10 h-10"
-      : "";
+        ? "w-10 h-10 xl:w-14 xl:h-14 xl:text-xl"
+        : size === 2
+          ? "w-12 h-12"
+          : size === 1
+            ? "w-10 h-10"
+            : "";
 
   const numberFontSize =
     size === 4 ? 17 : size === 3 ? 16 : size === 2 ? 15 : size === 1 ? 14 : 0;
@@ -28,12 +28,12 @@ const Gauge = ({ data, size }: Props) => {
     size === 4
       ? 157
       : size === 3
-      ? 159
-      : size === 2
-      ? 135
-      : size === 1
-      ? 115
-      : 0;
+        ? 159
+        : size === 2
+          ? 135
+          : size === 1
+            ? 115
+            : 0;
 
   const strokeSize = size === 1 ? "3" : "4";
 
@@ -50,13 +50,12 @@ const Gauge = ({ data, size }: Props) => {
             cx="45%"
             cy="45%"
             r="45%"
-            className={`h-full w-full fill-none ${
-              data.vote_average * 10 >= 70
+            className={`h-full w-full fill-none ${data.vote_average * 10 >= 70
                 ? "stroke-green-500"
                 : data.vote_average * 10 >= 50
-                ? "stroke-yellow-400"
-                : "stroke-red-500"
-            } translate-x-[5%] translate-y-[5%]`}
+                  ? "stroke-yellow-400"
+                  : "stroke-red-500"
+              } translate-x-[5%] translate-y-[5%]`}
             style={{
               strokeWidth: `${strokeSize}`,
               strokeLinecap: "round",
