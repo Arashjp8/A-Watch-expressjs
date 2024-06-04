@@ -13,9 +13,20 @@ export const getTrendingMovies = async (req: Request, res: Response) => {
 
 export const getPopularMovies = async (req: Request, res: Response) => {
   try {
-    const movies = await MovieModel.find({});
+    const limit = 20;
+    const page = parseInt(req.query.page as string) || 1;
 
-    res.status(200).send(movies);
+    const total_results = await MovieModel.countDocuments();
+    const total_pages = Math.ceil(total_results / limit);
+
+    const results = await MovieModel.find({});
+
+    res.status(200).send({
+      page,
+      results,
+      total_pages,
+      total_results,
+    });
   } catch (err) {
     handleDataBaseError(res, "Error fetching popular movies ", err);
   }

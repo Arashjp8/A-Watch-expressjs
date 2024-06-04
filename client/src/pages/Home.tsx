@@ -35,7 +35,7 @@ const Home = () => {
     <>
       {sections.map(({ title, link, hookResponse }) => {
         const { data: items, isLoading, error } = hookResponse;
-
+        console.log(items);
         if (isLoading)
           return (
             <div key={title} className="h-[100vh]">

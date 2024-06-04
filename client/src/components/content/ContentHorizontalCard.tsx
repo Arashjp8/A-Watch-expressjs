@@ -42,8 +42,9 @@ const ContentHorizontalCard = ({
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={`${styleProp} group relative mb-10 ${searchPage ? "h-[180px]" : "h-[380px]"
-        } ${width} cursor-pointer overflow-hidden sm:w-72 xl:h-[400px] xl:w-[580px]`}
+      className={`${styleProp} group relative mb-10 ${
+        searchPage ? "h-[180px]" : "h-[380px]"
+      } ${width} cursor-pointer overflow-hidden sm:w-72 xl:h-[400px] xl:w-[580px]`}
     >
       <ImageComponent
         src={`https://image.tmdb.org/t/p/w1280${data?.backdrop_path}`}
@@ -52,14 +53,16 @@ const ContentHorizontalCard = ({
       />
       <div className="absolute flex h-[85%] w-full flex-row gap-3 rounded-3xl bg-gradient-to-t from-black transition-all duration-150 ease-linear group-hover:rounded-xl"></div>
       <div
-        className={`absolute ${searchPage ? "bottom-0" : "bottom-12"
-          } left-0 flex items-center gap-5 xl:gap-10`}
+        className={`absolute ${
+          searchPage ? "bottom-0" : "bottom-12"
+        } left-0 flex items-center gap-5 xl:gap-10`}
       >
         <ImageComponent
           src={`https://image.tmdb.org/t/p/w200${data.poster_path}`}
           alt={data?.title}
-          className={`${searchPage ? "min-w-24 max-w-24 w-24" : "min-w-28 max-w-28 w-28"
-            } h-[60%] min-h-[60%] rounded-3xl border-[1px] border-blue-400 object-cover md:w-32`}
+          className={`${
+            searchPage ? "min-w-24 max-w-24 w-24" : "min-w-28 max-w-28 w-28"
+          } h-[60%] min-h-[60%] rounded-3xl border-[1px] border-blue-400 object-cover md:w-32`}
         />
         <section
           className={`${searchPage ? "mb-5" : ""} flex flex-col gap-1 xl:gap-3`}
