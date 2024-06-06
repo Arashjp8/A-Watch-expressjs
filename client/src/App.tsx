@@ -1,11 +1,16 @@
-import { Text } from "@chakra-ui/react";
 import "./App.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import { VStack } from "@chakra-ui/react";
 
 function App() {
   return (
-    <>
-      <Text fontSize={"x-large"}>Kubs 🍑</Text>
-    </>
+    <VStack width={"100%"} height={"100vh"}>
+      <Navbar />
+      <Home />
+      <Footer />
+    </VStack>
   );
 }
 
