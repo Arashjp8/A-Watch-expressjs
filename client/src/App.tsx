@@ -6,7 +6,7 @@ import { VStack } from "@chakra-ui/react";
 
 function App() {
   return (
-    <VStack width={"100%"} height={"100vh"}>
+    <VStack overflowX={"hidden"} width={"100%"} height={"100vh"}>
       <Navbar />
       <Home />
       <Footer />
