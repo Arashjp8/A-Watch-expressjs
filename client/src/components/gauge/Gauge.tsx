@@ -1,8 +1,8 @@
-import { Movie, MovieMyAPI } from "../../interfaces/Movie";
 import { TvShow } from "../../interfaces/TvShow";
+import { Movie } from "../../../../server/src/models/MovieModel";
 
 interface Props {
-  data?: Movie | MovieMyAPI | TvShow;
+  data?: Movie | TvShow;
   size: number;
 }
 const Gauge = ({ data, size }: Props) => {

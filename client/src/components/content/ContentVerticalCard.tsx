@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Movie, MovieMyAPI } from "../../interfaces/Movie";
+import { Movie } from "../../../../server/src/models/MovieModel";
 import { TvShow } from "../../interfaces/TvShow";
 import ImageComponent from "../ImageComponent";
 import Gauge from "../gauge/Gauge";
@@ -16,8 +16,8 @@ interface Props {
   styleProp?: string;
 }
 
-export const isMovie = (data: Movie | MovieMyAPI | TvShow): data is Movie => {
-  return ((data as Movie) || (data as MovieMyAPI)).title !== undefined;
+export const isMovie = (data: Movie | TvShow): data is Movie => {
+  return ((data as Movie) || (data as Movie)).title !== undefined;
 };
 
 const ContentVerticalCard = ({
@@ -38,13 +38,13 @@ const ContentVerticalCard = ({
     <div
       onClick={() => {
         if (isMovie(data)) {
-          navigate(`/movies/:${data.id}`);
-          changeSelectedContentId(data.id);
+          navigate(`/movies/:${data._id}`);
+          if (data && data._id) changeSelectedContentId(data._id);
           isAMovie();
           setSelectedIcon("Movies");
         } else if (!isMovie(data)) {
-          navigate(`/tvshows/:${data.id}`);
-          changeSelectedContentId(data.id);
+          //navigate(`/tvshows/:${data._id}`);
+          //changeSelectedContentId(data._id);
           isATvShow();
           setSelectedIcon("Tv Shows");
         }
@@ -55,7 +55,7 @@ const ContentVerticalCard = ({
     >
       <ImageComponent
         src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
-        alt={data && isMovie(data) ? data?.title : data?.name}
+        alt={isMovie(data) ? data?.title : data.name}
         className={`absoloute h-[50%] w-full rounded-3xl object-cover transition-all duration-150 ease-linear group-hover:rounded-xl md:h-[312px] md:w-full`}
       />
       <div

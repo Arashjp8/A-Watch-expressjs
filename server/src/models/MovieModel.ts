@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const MovieSchema = new mongoose.Schema({
   _id: String,
-  title: String,
+  title: { type: String, default: "" },
   vote_average: Number,
   backdrop_path: {
     type: String,

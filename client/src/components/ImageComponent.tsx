@@ -1,6 +1,6 @@
 interface Props {
   src: string;
-  alt: string;
+  alt?: string;
   className?: string;
 }
 const ImageComponent = ({ src, alt, className }: Props) => {
