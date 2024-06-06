@@ -1,44 +1,68 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap");
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
 
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
 
-/* width */
-::-webkit-scrollbar {
-  width: 10px;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: #1b1b1b;
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
 }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 5px;
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
 }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
 }
 
-@layer components {
-  .sidebar-icons {
-    @apply relative mx-auto mb-2 mt-2 flex h-12 w-12 cursor-pointer flex-col items-center justify-center text-2xl shadow-lg transition-all duration-150 ease-linear md:flex-row;
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
   }
-
-  .sidebar-tooltip {
-    @apply absolute left-14 m-2 w-auto min-w-max origin-left scale-0 rounded-md bg-gray-900 p-2 text-sm font-bold text-white shadow-md transition-all duration-100;
+  a:hover {
+    color: #747bff;
   }
-
-  .card {
-    @apply flex w-60 flex-col items-center rounded-3xl;
-  }
-
-  .card-title {
-    @apply absolute top-0 flex h-full w-full scale-0 flex-col items-center justify-between rounded-3xl bg-black bg-opacity-90;
+  button {
+    background-color: #f9f9f9;
   }
 }
