@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 
 function App() {
   return (
-    <div className="flex flex-col items-center w-[100vw] h-[100%]">
+    <div className="flex flex-col items-center justify-between w-[100vw] h-[100vh] border border-red-600">
       <Navbar />
       <Home />
       <Footer />

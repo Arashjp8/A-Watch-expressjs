@@ -12,7 +12,7 @@ function Navbar() {
   return (
     <nav
       className={
-        "flex flex-row justify-between items-center w-[100%] h-[80px] p-4"
+        "basis-1/12 flex flex-row justify-between items-center w-[100%] h-[80px] p-4 border border-sky-500"
       }
     >
       <a href={"/"} className={"basis-1/3 text-3xl font-bold"}>
