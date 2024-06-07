@@ -1,16 +1,14 @@
-import "./App.css";
-import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import { VStack } from "@chakra-ui/react";
 
 function App() {
   return (
-    <VStack overflowX={"hidden"} width={"100%"} height={"100vh"}>
+    <div className="font-lato flex flex-col items-center justify-between w-[100vw] h-[100vh] border border-red-600">
       <Navbar />
       <Home />
       <Footer />
-    </VStack>
+    </div>
   );
 }
 
