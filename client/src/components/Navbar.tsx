@@ -1,23 +1,27 @@
-import { Button, HStack, Heading, Icon, useColorMode } from "@chakra-ui/react";
+import {
+  Button,
+  HStack,
+  Heading,
+  Icon,
+  Link,
+  useColorMode,
+} from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-
 function Switch() {
   const { colorMode, toggleColorMode } = useColorMode();
+
   return (
-    <>
-      <Button
-        onClick={toggleColorMode}
-        borderRadius={"10px"}
-        width={"20px"}
-        height={"40px"}
-        variant={"ghost"}
-      //transition={"transform 0.5s ease-in-out"}
-      >
-        <Icon fontSize={"xl"}>
-          {colorMode === "dark" ? <MoonIcon /> : <SunIcon />}
-        </Icon>{" "}
-      </Button>
-    </>
+    <Button
+      onClick={toggleColorMode}
+      borderRadius={"10px"}
+      width={"20px"}
+      height={"40px"}
+      variant={"ghost"}
+    >
+      <Icon fontSize={"xl"} transition={"all 0.3s ease"}>
+        {colorMode === "dark" ? <MoonIcon /> : <SunIcon />}
+      </Icon>{" "}
+    </Button>
   );
 }
 
@@ -30,10 +34,10 @@ function Navbar() {
       width={"100%"}
       height={"80px"}
       paddingX={"1rem"}
-      backgroundColor={"tomato"}
+      borderBottom={"1px solid white"}
     >
       <Heading as={"h3"} fontSize={"xl"}>
-        WatchList
+        <Link href="/">WatchList</Link>
       </Heading>
       <div>nav options or searchbar</div>
       <Switch />
