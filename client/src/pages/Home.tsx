@@ -1,6 +1,10 @@
-// TODO: Add home page
+import MovieCard from "../components/MovieCard";
 
 function Home() {
-  return <h1 className="text-3xl font-bold">Kubs 🍑</h1>;
+  return (
+    <div className={"w-full"}>
+      <MovieCard />
+    </div>
+  );
 }
 export default Home;

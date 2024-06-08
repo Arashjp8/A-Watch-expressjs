@@ -3,9 +3,9 @@ import { useState } from "react";
 function NavItems() {
   return (
     <ul className={"w-[20%] text-2xl flex flex-row space-x-12"}>
-      <li>item</li>
-      <li>item</li>
-      <li>item</li>
+      <li className={"hover:cursor-pointer hover:underline"}>item</li>
+      <li className={"hover:cursor-pointer hover:underline"}>item</li>
+      <li className={"hover:cursor-pointer hover:underline"}>item</li>
     </ul>
   );
 }
@@ -62,21 +62,6 @@ function Navbar() {
         )}
       </button>
     </nav>
-    //<nav
-    //  className={
-    //    "basis-1/12 flex flex-row justify-between items-center w-[100%] h-[80px] p-4 border border-sky-500"
-    //  }
-    //>
-    //  <a href={"/"} className={"basis-1/3 text-2xl font-bold"}>
-    //    MovieMerge
-    //  </a>
-    //  <NavItems />
-    //  <button
-    //    className={"basis-1/3 w-2 h-10 border border-red-400 flex justify-end"}
-    //  >
-    //    moon
-    //  </button>
-    //</nav>
   );
 }
 export default Navbar;

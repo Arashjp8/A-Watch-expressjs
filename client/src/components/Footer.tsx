@@ -2,7 +2,7 @@ function Footer() {
   return (
     <div
       className={
-        "basis-1/12 flex justify-center items-center border border-lime-500 w-[100vw] h-[80px] text-center"
+        "basis-1/12 flex justify-center items-center border border-lime-500 w-[100vw] h-[80px] min-h-[80px] text-center"
       }
     >
       <p>
