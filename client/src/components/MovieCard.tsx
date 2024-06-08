@@ -13,6 +13,7 @@ function MovieCard() {
             className={
               "flex flex-row border bg-gray-100 rounded-md hover:scale-105 hover:cursor-pointer transition-all duration-300 ease-in-out hover:text-black"
             }
+            onClick={() => console.log(movie.genres)}
           >
             <img
               src={movie.poster_path}
@@ -24,7 +25,9 @@ function MovieCard() {
             >
               <span className={"text-xl"}>{movie.title}</span>
               <span>{movie.vote_average}</span>
-              <span>{movie.release_date}</span>
+              <div className={"flex flex-row gap-4"}>
+                <span>{movie.release_date}</span>
+              </div>
             </div>
           </div>
         ))}

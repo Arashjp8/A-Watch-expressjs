@@ -2,10 +2,22 @@ import { useState } from "react";
 
 function NavItems() {
   return (
-    <ul className={"w-[20%] text-2xl flex flex-row space-x-12"}>
-      <li className={"hover:cursor-pointer hover:underline"}>item</li>
-      <li className={"hover:cursor-pointer hover:underline"}>item</li>
-      <li className={"hover:cursor-pointer hover:underline"}>item</li>
+    <ul className={"text-white w-[20%] text-2xl flex flex-row space-x-12"}>
+      <li
+        className={"hover:cursor-pointer hover:underline hover:text-teal-400"}
+      >
+        item
+      </li>
+      <li
+        className={"hover:cursor-pointer hover:underline hover:text-teal-400"}
+      >
+        item
+      </li>
+      <li
+        className={"hover:cursor-pointer hover:underline hover:text-teal-400"}
+      >
+        item
+      </li>
     </ul>
   );
 }
@@ -15,7 +27,7 @@ function Navbar() {
   return (
     <nav
       className={
-        "flex flex-row justify-between items-center w-full h-[80px] p-4 border border-sky-500"
+        "flex flex-row justify-between items-center w-full h-[80px] p-4 bg-blue-950"
       }
     >
       <div className={"flex flex-row space-x-12 items-center"}>

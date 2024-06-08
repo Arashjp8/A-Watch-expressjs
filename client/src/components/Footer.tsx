@@ -2,7 +2,7 @@ function Footer() {
   return (
     <div
       className={
-        "basis-1/12 flex justify-center items-center border border-lime-500 w-[100vw] h-[80px] min-h-[80px] text-center"
+        "basis-1/12 flex justify-center items-center bg-blue-950 bg-opacity-95 text-white w-[100vw] h-[80px] min-h-[80px] text-center"
       }
     >
       <p>
@@ -10,7 +10,7 @@ function Footer() {
         <a
           href="https://twitter.com/arashjafarpour1"
           target="blank"
-          className="hover:text-blue-600 hover:border-b-2 border-blue-600"
+          className="hover:text-teal-400 hover:border-b-2 border-b-teal-400"
         >
           @arashjafarpour1
         </a>
