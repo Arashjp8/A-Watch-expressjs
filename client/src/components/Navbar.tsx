@@ -24,6 +24,7 @@ function NavItems() {
 
 function Navbar() {
   const [toggled, setToggled] = useState<boolean>(false);
+
   return (
     <nav
       className={

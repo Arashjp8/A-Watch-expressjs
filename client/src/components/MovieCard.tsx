@@ -1,4 +1,5 @@
 import { movies } from "../data/movies";
+
 function MovieCard() {
   return (
     <>
@@ -13,7 +14,7 @@ function MovieCard() {
             className={
               "flex flex-row border bg-gray-100 rounded-md hover:scale-105 hover:cursor-pointer transition-all duration-300 ease-in-out hover:text-black"
             }
-            onClick={() => console.log(movie.genres)}
+            onClick={() => console.log(movie.poster_path)}
           >
             <img
               src={movie.poster_path}
@@ -24,10 +25,21 @@ function MovieCard() {
               className={"flex flex-col gap-8 p-4 items-start justify-start"}
             >
               <span className={"text-xl"}>{movie.title}</span>
-              <span>{movie.vote_average}</span>
-              <div className={"flex flex-row gap-4"}>
+              <div className={"flex flex-row gap-6"}>
                 <span>{movie.release_date}</span>
+                <span
+                  className={`${movie.vote_average < 50 ? "bg-red-200 text-red-700" : movie.vote_average < 70 ? "bg-yellow-200 text-yellow-700" : "bg-green-200 text-green-700"} py-1 px-2 rounded-md min-w-4`}
+                >
+                  {movie.vote_average}
+                </span>
               </div>
+              <button
+                className={
+                  "bg-teal-400 px-2 py-1 flex items-center justify-center rounded-md"
+                }
+              >
+                more
+              </button>
             </div>
           </div>
         ))}
