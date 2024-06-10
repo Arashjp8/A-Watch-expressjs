@@ -12,7 +12,7 @@ function MovieCard() {
           <div
             key={movie._id}
             className={
-              "flex flex-row border bg-gray-100 rounded-md hover:scale-105 hover:cursor-pointer transition-all duration-300 ease-in-out hover:text-black"
+              "h-48 flex flex-row border bg-gray-100 rounded-md hover:scale-105 hover:cursor-pointer transition-all duration-300 ease-in-out hover:text-black"
             }
             onClick={() => console.log(movie.poster_path)}
           >
@@ -22,9 +22,13 @@ function MovieCard() {
               className={"w-32 h-48 rounded-l-md"}
             />
             <div
-              className={"flex flex-col gap-8 p-4 items-start justify-start"}
+              className={"flex flex-col gap-4 p-4 items-start justify-start"}
             >
-              <span className={"text-xl"}>{movie.title}</span>
+              <span className={"text-xl"}>
+                {movie.title.length > 40
+                  ? movie.title.slice(0, 40) + "..."
+                  : movie.title}
+              </span>
               <div className={"flex flex-row gap-6"}>
                 <span>{movie.release_date}</span>
                 <span
@@ -35,7 +39,7 @@ function MovieCard() {
               </div>
               <button
                 className={
-                  "bg-teal-400 px-2 py-1 flex items-center justify-center rounded-md"
+                  "bg-teal-400 px-2 py-1 flex items-center justify-center rounded-md hover:bg-opacity-70 transition-all duration-300 ease-in-out"
                 }
               >
                 more
