@@ -1,7 +1,7 @@
 import useMovieStore from "./MovieStore";
 
 const headerStyle = "text-2xl font-semibold";
-const spanStyle = "text-lg text-gray-600";
+const spanStyle = "text-lg text-gray-600 dark:text-gray-400";
 
 interface DetailSectionProps {
   header: string;
@@ -39,7 +39,7 @@ function MoviePage() {
   return (
     <div
       className={
-        "w-auto h-full flex flex-col justify-start items-center gap-8 p-10"
+        "w-auto h-full flex flex-col justify-start items-center gap-8 p-10 dark:bg-slate-950 dark:text-white"
       }
     >
       <Hero

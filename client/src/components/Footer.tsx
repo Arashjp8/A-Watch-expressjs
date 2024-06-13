@@ -2,7 +2,7 @@ function Footer() {
   return (
     <div
       className={
-        "basis-1/12 flex justify-center items-center bg-blue-950 bg-opacity-95 text-white w-[100vw] h-[80px] min-h-[80px] text-center"
+        "basis-1/12 flex justify-center items-center bg-slate-900/80 dark:bg-slate-800 bg-opacity-95 text-white w-[100vw] h-[80px] min-h-[80px] text-center"
       }
     >
       <p>

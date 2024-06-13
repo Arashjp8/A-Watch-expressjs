@@ -2,8 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { movies } from "../data/movies";
 import useMovieStore from "../pages/MovieStore";
 
-// BUG: the url changes mvoieCard click the selectedMovie state changes but the moviePage element doesn't showup
-
 function MovieCard() {
   const navigate = useNavigate();
   const setSelectedMovie = useMovieStore((state) => state.setSelectedMovie);
@@ -12,14 +10,14 @@ function MovieCard() {
     <>
       <div
         className={
-          "p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-rows-4 gap-4 w-full h-full border border-lime-700 text-gray-600"
+          "p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-rows-4 gap-4 w-full h-full dark:text-slate-300 text-gray-600"
         }
       >
         {movies.map((movie) => (
           <div
             key={movie._id}
             className={
-              "md:h- md:w- lg:h-48 flex flex-row sm:flex-col lg:flex-row border bg-gray-100 rounded-md hover:scale-105 hover:cursor-pointer transition-all duration-300 ease-in-out hover:text-black"
+              "md:h- md:w- lg:h-48 flex flex-row sm:flex-col lg:flex-row dark:bg-slate-600 bg-gray-100 rounded-md hover:scale-105 hover:cursor-pointer transition-all duration-300 ease-in-out hover:text-black hover:dark:text-white"
             }
             onClick={() => {
               navigate(`/movies/${movie._id}`);
@@ -46,7 +44,7 @@ function MovieCard() {
               <span className={"text-lg"}>{movie.release_date}</span>
               <div
                 className={
-                  "flex flex-row md:gap-8 justify-between w-full lg:w-[] lg:justify-start"
+                  "flex flex-row md:gap-8 justify-between w-full lg:w-[]"
                 }
               >
                 <span
@@ -56,7 +54,7 @@ function MovieCard() {
                 </span>
                 <button
                   className={
-                    "bg-teal-200 text-md px-2 pb-1 flex flex-row items-center justify-center text-center rounded-lg hover:bg-opacity-70 transition-all duration-300 ease-in-out"
+                    "bg-teal-200 dark:text-black text-md px-2 pb-1 flex flex-row items-center justify-center text-center rounded-lg hover:bg-opacity-70 transition-all duration-300 ease-in-out"
                   }
                 >
                   more

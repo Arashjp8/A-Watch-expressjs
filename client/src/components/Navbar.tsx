@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function NavItems() {
   return (
@@ -25,21 +26,35 @@ function NavItems() {
 function Navbar() {
   const [toggled, setToggled] = useState<boolean>(false);
 
+  const toggleTheme = () => {
+    setToggled(!toggled);
+    document.body.classList.toggle("dark");
+  };
+
+  const navigate = useNavigate();
+
   return (
     <nav
       className={
-        "flex flex-row justify-between items-center w-full h-[80px] p-4 bg-blue-950"
+        "flex flex-row justify-between items-center w-full h-[80px] p-4 bg-slate-900/80 dark:bg-slate-800"
       }
     >
       <div className={"flex flex-row space-x-12 items-center"}>
-        <a href={"/"} className={"text-2xl font-extrabold text-teal-500"}>
+        <a
+          onClick={() => navigate("/")}
+          className={
+            "text-2xl hover:cursor-pointer font-extrabold text-teal-500"
+          }
+        >
           MovieMerge
         </a>
-        <NavItems />
       </div>
       <button
         className={"flex justify-end p-2 bg-teal-400 rounded-lg"}
-        onClick={() => setToggled((prevState) => !prevState)}
+        onClick={() => {
+          setToggled((prevState) => !prevState);
+          toggleTheme();
+        }}
       >
         {toggled ? (
           <svg
