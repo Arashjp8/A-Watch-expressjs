@@ -1,5 +1,7 @@
 import { movies } from "../data/movies";
 
+// TODO: setup react router and connect it to the MoveiPage.tsx
+
 function MovieCard() {
   return (
     <>

@@ -1,4 +1,18 @@
-export const movies = [
+export interface Movie {
+  _id: string;
+  title: string;
+  vote_average: number;
+  backdrop_path: string;
+  overview: string;
+  poster_path: string;
+  release_date: string;
+  original_language: string;
+  genres: string[];
+  cast: { id: string; role: string }[];
+  crew: { id: string; role: string }[];
+  __v: number;
+}
+export const movies: Movie[] = [
   {
     _id: "653346-kingdom-of-the-planet-of-the-apes",
     title: "Kingdom of the Planet of the Apes",
