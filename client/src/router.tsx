@@ -6,8 +6,8 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
-    children: [{ path: "movies/:id", element: <MoviePage /> }],
   },
+  { path: "/movies/:id", element: <MoviePage /> },
 ]);
 
 export default router;

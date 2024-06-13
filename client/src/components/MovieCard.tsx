@@ -2,11 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { movies } from "../data/movies";
 import useMovieStore from "../pages/MovieStore";
 
-// TODO: setup react router and connect it to the MoveiPage.tsx
+// BUG: the url changes mvoieCard click the selectedMovie state changes but the moviePage element doesn't showup
 
 function MovieCard() {
   const navigate = useNavigate();
   const setSelectedMovie = useMovieStore((state) => state.setSelectedMovie);
+
   return (
     <>
       <div

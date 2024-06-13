@@ -32,7 +32,9 @@ function Navbar() {
       }
     >
       <div className={"flex flex-row space-x-12 items-center"}>
-        <a className={"text-2xl font-extrabold text-teal-500"}>MovieMerge</a>
+        <a href={"/"} className={"text-2xl font-extrabold text-teal-500"}>
+          MovieMerge
+        </a>
         <NavItems />
       </div>
       <button
