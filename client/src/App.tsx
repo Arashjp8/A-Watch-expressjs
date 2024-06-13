@@ -6,7 +6,7 @@ import MoviePage from "./pages/MoviePage";
 
 function App() {
   return (
-    <div className="font-lato flex flex-col items-center justify-between w-[100vw]">
+    <div className="font-lato flex flex-col items-center justify-between w-[100vw] h-[100vh]">
       <Navbar />
       <Routes>
         <Route element={<Home />} path={"/"} />
