@@ -1,9 +1,15 @@
-import { Movie } from "../data/movies";
+import { useEffect } from "react";
+import useMovieStore from "./MovieStore";
 
-function MoviePage(movie: Movie) {
+function MoviePage() {
+  const selectedMovie = useMovieStore((state) => state.selectedMovie);
+
+  useEffect(() => {
+    console.log(selectedMovie);
+  }, [selectedMovie]);
   return (
     <>
-      <h1>{movie.title}</h1>
+      <h1>{selectedMovie.title}</h1>
     </>
   );
 }

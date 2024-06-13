@@ -1,8 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import { movies } from "../data/movies";
+import useMovieStore from "../pages/MovieStore";
 
 // TODO: setup react router and connect it to the MoveiPage.tsx
 
 function MovieCard() {
+  const navigate = useNavigate();
+  const setSelectedMovie = useMovieStore((state) => state.setSelectedMovie);
   return (
     <>
       <div
@@ -16,7 +20,10 @@ function MovieCard() {
             className={
               "md:h- md:w- lg:h-48 flex flex-row sm:flex-col lg:flex-row border bg-gray-100 rounded-md hover:scale-105 hover:cursor-pointer transition-all duration-300 ease-in-out hover:text-black"
             }
-            onClick={() => console.log(movie.poster_path)}
+            onClick={() => {
+              navigate(`/movies/${movie._id}`);
+              setSelectedMovie(movie);
+            }}
           >
             <img
               src={movie.poster_path}
