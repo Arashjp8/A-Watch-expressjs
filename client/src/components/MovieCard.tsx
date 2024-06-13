@@ -12,7 +12,7 @@ function MovieCard() {
           <div
             key={movie._id}
             className={
-              "lg:h-48 flex flex-col lg:flex-row border bg-gray-100 rounded-md hover:scale-105 hover:cursor-pointer transition-all duration-300 ease-in-out hover:text-black"
+              "md:h- md:w- lg:h-48 flex flex-row sm:flex-col lg:flex-row border bg-gray-100 rounded-md hover:scale-105 hover:cursor-pointer transition-all duration-300 ease-in-out hover:text-black"
             }
             onClick={() => console.log(movie.poster_path)}
           >
@@ -20,11 +20,13 @@ function MovieCard() {
               src={movie.poster_path}
               loading={"lazy"}
               className={
-                "md:w-full md:h-[432px] lg:w-32 lg:h-48 rounded-md lg:rounded-l-md"
+                "w-[full] h-[200px] sm:h-[420px] md:w-full md:h-[432px] lg:w-32 lg:h-48 rounded-md lg:rounded-l-md"
               }
             />
             <div
-              className={"flex flex-col gap-4 p-4 items-start justify-start"}
+              className={
+                "w-full flex flex-col gap-4 p-4 items-start justify-between sm:justify-start"
+              }
             >
               <span className={"text-xl"}>
                 {movie.title.length > 40
@@ -32,7 +34,11 @@ function MovieCard() {
                   : movie.title}
               </span>
               <span className={"text-lg"}>{movie.release_date}</span>
-              <div className={"flex flex-row gap-6"}>
+              <div
+                className={
+                  "flex flex-row md:gap-8 justify-between w-full lg:w-[] lg:justify-start"
+                }
+              >
                 <span
                   className={`${movie.vote_average < 50 ? "bg-red-200 text-red-700" : movie.vote_average < 70 ? "bg-yellow-200 text-yellow-700" : "bg-green-200 text-green-700"} py-1 px-2 rounded-md text-center min-w-9`}
                 >
