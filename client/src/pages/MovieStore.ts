@@ -8,7 +8,7 @@ interface MovieStore {
 
 const useMovieStore = create<MovieStore>((set) => ({
   selectedMovie: movies[0],
-  setSelectedMovie: (movie) => set((state) => ({ selectedMovie: movie })),
+  setSelectedMovie: (movie) => set(() => ({ selectedMovie: movie })),
 }));
 
 export default useMovieStore;

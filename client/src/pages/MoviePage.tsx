@@ -39,7 +39,7 @@ function MoviePage() {
   return (
     <div
       className={
-        "w-auto h-auto flex flex-col justify-start items-center gap-8 p-10 dark:bg-slate-950 dark:text-white"
+        "w-full h-auto sm:h-full flex flex-col justify-start items-center gap-8 p-10 dark:bg-slate-950 dark:text-white"
       }
     >
       <Hero
