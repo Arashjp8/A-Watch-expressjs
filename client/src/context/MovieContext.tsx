@@ -6,6 +6,10 @@ interface MovieContextType {
   setSelectedMovie: (movie: Movie) => void;
 }
 
+interface MovieContextProviderProps {
+  children: ReactNode;
+}
+
 const MovieContext = createContext<MovieContextType | undefined>(undefined);
 
 export const useMovieContext = () => {
@@ -19,11 +23,9 @@ export const useMovieContext = () => {
   return context;
 };
 
-interface MovieContextProps {
-  children: ReactNode;
-}
-
-export const MovieContextProvider = ({ children }: MovieContextProps) => {
+export const MovieContextProvider = ({
+  children,
+}: MovieContextProviderProps) => {
   const [selectedMovie, setSelectedMovie] = useState<Movie>(movies[0]);
 
   const value: MovieContextType = {

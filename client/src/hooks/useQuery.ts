@@ -5,8 +5,6 @@
 // 4. returning the state based on the result of the try catch block
 // 5. run the fetchData with a useEffect every time the queryKey changed
 
-// TODO: make your own version of zustand as well
-
 import { useEffect, useState } from "react";
 
 interface QueryState<T> {
