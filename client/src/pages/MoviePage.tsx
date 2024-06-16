@@ -1,4 +1,4 @@
-import useMovieStore from "./MovieStore";
+import { useMovieContext } from "../context/MovieContext";
 
 const headerStyle = "text-2xl font-semibold";
 const spanStyle = "text-lg text-gray-600 dark:text-gray-400";
@@ -34,7 +34,7 @@ function Hero({ title, posterPath }: HeroProps) {
 }
 
 function MoviePage() {
-  const selectedMovie = useMovieStore((state) => state.selectedMovie);
+  const { selectedMovie } = useMovieContext();
 
   return (
     <div

@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { movies } from "../data/movies";
-import useMovieStore from "../pages/MovieStore";
+import { useMovieContext } from "../context/MovieContext";
 
 function MovieCard() {
   const navigate = useNavigate();
-  const setSelectedMovie = useMovieStore((state) => state.setSelectedMovie);
+  const { setSelectedMovie } = useMovieContext();
 
   return (
     <>

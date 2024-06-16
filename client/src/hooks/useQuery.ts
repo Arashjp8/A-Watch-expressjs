@@ -5,6 +5,8 @@
 // 4. returning the state based on the result of the try catch block
 // 5. run the fetchData with a useEffect every time the queryKey changed
 
+// TODO: make your own version of zustand as well
+
 import { useEffect, useState } from "react";
 
 interface QueryState<T> {
@@ -14,6 +16,7 @@ interface QueryState<T> {
   isFetching: boolean;
 }
 
+// using strings as object keys for caching
 const cache: { [key: string]: any } = {};
 
 const useQuery = <T>(queryKey: string, queryFn: () => Promise<T>) => {
@@ -35,11 +38,18 @@ const useQuery = <T>(queryKey: string, queryFn: () => Promise<T>) => {
       return;
     }
 
-    setState((prev) => ({ ...prev, isLoading: true, isFetching: true }));
+    setState((prevState) => ({
+      ...prevState,
+      isLoading: true,
+      isFetching: true,
+    }));
 
     try {
       const data = await queryFn();
       cache[queryKey] = data;
+
+      console.log("Cache Data: ", cache);
+
       setState({ data, error: null, isLoading: false, isFetching: false });
     } catch (err) {
       setState({
@@ -49,13 +59,13 @@ const useQuery = <T>(queryKey: string, queryFn: () => Promise<T>) => {
         isFetching: false,
       });
     }
-
-    useEffect(() => {
-      fetchData();
-    }, [queryKey]);
-
-    return state;
   };
+
+  useEffect(() => {
+    fetchData();
+  }, [queryKey]);
+
+  return state;
 };
 
 export default useQuery;
