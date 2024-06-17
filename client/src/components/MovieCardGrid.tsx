@@ -1,9 +1,34 @@
 import { useNavigate } from "react-router-dom";
-import { movies } from "../data/movies";
+import { IMovieResponse, Movie } from "../data/movies";
 import { useMovieContext } from "../context/MovieContext";
+import useQuery from "../hooks/useQuery";
+import { apiClient } from "../services/apiClient";
 
-function MovieCard() {
+function MovieCardGrid() {
   const navigate = useNavigate();
+  // routes:
+  // baseURL/api/movie/popular
+  // baseURL/api/movie/:id/videos
+  // baseURL/api/movie/:id/credits
+  const fetchPopularMovies = async (): Promise<IMovieResponse> => {
+    return await apiClient("/api/movie/popular", "Get");
+  };
+
+  const {
+    data: movies,
+    error,
+    isLoading,
+    isFetching,
+  } = useQuery("movies", fetchPopularMovies);
+
+  console.log(movies);
+  console.log(error);
+  console.log(isLoading);
+  console.log(isFetching);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
   const { setSelectedMovie } = useMovieContext();
 
   return (
@@ -13,7 +38,7 @@ function MovieCard() {
           "p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-rows-4 gap-4 w-full h-full dark:text-slate-300 text-gray-600"
         }
       >
-        {movies.map((movie) => (
+        {movies?.results.map((movie: Movie) => (
           <div
             key={movie._id}
             className={
@@ -67,4 +92,4 @@ function MovieCard() {
     </>
   );
 }
-export default MovieCard;
+export default MovieCardGrid;

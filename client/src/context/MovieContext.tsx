@@ -1,8 +1,8 @@
 import { ReactNode, createContext, useContext, useState } from "react";
-import { Movie, movies } from "../data/movies";
+import { Movie } from "../data/movies";
 
 interface MovieContextType {
-  selectedMovie: Movie;
+  selectedMovie: Movie | null;
   setSelectedMovie: (movie: Movie) => void;
 }
 
@@ -26,7 +26,7 @@ export const useMovieContext = () => {
 export const MovieContextProvider = ({
   children,
 }: MovieContextProviderProps) => {
-  const [selectedMovie, setSelectedMovie] = useState<Movie>(movies[0]);
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
   const value: MovieContextType = {
     selectedMovie,

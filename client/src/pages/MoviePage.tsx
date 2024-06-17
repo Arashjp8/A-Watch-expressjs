@@ -36,6 +36,8 @@ function Hero({ title, posterPath }: HeroProps) {
 function MoviePage() {
   const { selectedMovie } = useMovieContext();
 
+  if (!selectedMovie) return <div>No movie was selected!</div>;
+
   return (
     <div
       className={

@@ -12,6 +12,14 @@ export interface Movie {
   crew: { id: string; role: string }[];
   __v: number;
 }
+
+export interface IMovieResponse {
+  page: number;
+  results: Movie[];
+  total_pages: number;
+  total_results: number;
+}
+
 export const movies: Movie[] = [
   {
     _id: "653346-kingdom-of-the-planet-of-the-apes",
