@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { MovieModel } from "../models/MovieModel";
 import { PersonModel } from "../models/PersonModel";
+import { VideoModel } from "../models/VideoModel";
 
 const handleDataBaseError = (res: Response, message: string, err: any) => {
   console.error(message, err);
@@ -80,5 +81,16 @@ export const getMovieCredits = async (req: Request, res: Response) => {
     res.status(200).json({ cast, crew });
   } catch (err) {
     handleDataBaseError(res, "Error fetching movie credits: ", err);
+  }
+};
+
+export const getMovieVideos = async (req: Request, res: Response) => {
+  const movieID = req.params.id;
+
+  try {
+    const videosDocument = await VideoModel.findOne({ _id: movieID });
+    res.status(200).json(videosDocument);
+  } catch (err) {
+    handleDataBaseError(res, "Error fetching movie videos: ", err);
   }
 };

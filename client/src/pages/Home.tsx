@@ -2,6 +2,7 @@ import MovieCard from "../components/MovieCard";
 import useQuery from "../hooks/useQuery";
 
 function Home() {
+  // TODO: write an apiClient service
   const fetchDummy = async () => {
     const response = await fetch("https://localhost:3001/api/movie/popular", {
       method: "Get",
