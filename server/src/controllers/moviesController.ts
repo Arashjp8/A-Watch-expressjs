@@ -7,11 +7,6 @@ const handleDataBaseError = (res: Response, message: string, err: any) => {
   res.status(500).send(JSON.stringify({ message }));
 };
 
-// TODO: show data in movie page
-// TODO: show data in person page
-// TODO: show data for searchbar
-// TODO: SHARE YOUR DATA TYPES IN CLIENT AND BACKEND
-
 export const getTrendingMovies = async (req: Request, res: Response) => {
   // await handleFetchRequest("/trending/movie/day", res);
 };

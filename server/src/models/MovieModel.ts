@@ -1,18 +1,15 @@
 import mongoose from "mongoose";
 
 const MovieSchema = new mongoose.Schema({
-  _id: String,
-  title: { type: String, default: "" },
-  vote_average: Number,
-  backdrop_path: {
-    type: String,
-    default: "",
-  },
-  overview: String,
-  poster_path: String,
-  release_date: String,
-  original_language: String,
-  genres: [String],
+  _id: { type: String, required: true },
+  title: { type: String, required: true },
+  vote_average: { type: Number, min: 0, max: 100 },
+  backdrop_path: { type: String, default: "" },
+  overview: { type: String, default: "" },
+  poster_path: { type: String, default: "" },
+  release_date: { type: String, default: "" },
+  original_language: { type: String, default: "" },
+  genres: [{ type: String }],
   cast: [{}],
   crew: [{}],
 });
