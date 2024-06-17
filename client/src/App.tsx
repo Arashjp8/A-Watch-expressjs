@@ -7,7 +7,7 @@ import { MovieContextProvider } from "./context/MovieContext";
 
 function App() {
   return (
-    <div className="font-lato flex flex-col items-center justify-between w-[100vw] h-[100vh]">
+    <div className="font-lato flex flex-col items-center justify-between w-[100vw] h-full">
       <Navbar />
       <MovieContextProvider>
         <Routes>

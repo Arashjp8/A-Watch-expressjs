@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useMovieContext } from "../context/MovieContext";
 import useQuery from "../hooks/useQuery";
 import { CreditsResponse, People } from "../interface/credits";
@@ -9,11 +10,15 @@ const spanStyle = "text-lg text-gray-600 dark:text-gray-400";
 interface DetailSectionProps {
   header: string;
   Content: JSX.Element;
+  cols?: string;
+  rows?: string;
 }
 
-function DetailSection({ header, Content }: DetailSectionProps) {
+function DetailSection({ header, Content, cols, rows }: DetailSectionProps) {
+  if (!cols) cols = "";
+  if (!rows) rows = "";
   return (
-    <section>
+    <section className={`${cols} ${rows}`}>
       <h2 className={headerStyle}>{header}:</h2>
       {Content}
     </section>
@@ -34,13 +39,28 @@ function Hero({ title, posterPath }: HeroProps) {
   );
 }
 
-interface CreditsProps {
-  movieID: string;
+interface PersonDetailProps {
+  person: People;
 }
 
-function Credits({ movieID }: CreditsProps) {
+function PersonDetail({ person }: PersonDetailProps) {
+  return (
+    <div className={"flex flex-col gap-2 m-2"}>
+      <img src={person.profile_path} className={"w-[150px] h-[225px]"} />
+      <span className={spanStyle}>{person.name}</span>
+      <span className={spanStyle}>Role: {person.role}</span>
+    </div>
+  );
+}
+
+function Credits() {
+  const { selectedMovie } = useMovieContext();
+
   const fetchCredits = async (): Promise<CreditsResponse> => {
-    const creditsData = await apiClient(`/movie/${movieID}/credits`, "Get");
+    const creditsData = await apiClient(
+      `/movie/${selectedMovie?._id}/credits`,
+      "Get",
+    );
     return creditsData;
   };
 
@@ -48,9 +68,12 @@ function Credits({ movieID }: CreditsProps) {
     data: credits,
     error,
     isLoading,
-  } = useQuery("movie-credits", fetchCredits);
+    refetch,
+  } = useQuery(`movie-${selectedMovie?._id}-credits`, fetchCredits);
 
-  console.log("MOVIE CREDITS: ", credits);
+  useEffect(() => {
+    refetch();
+  }, [selectedMovie]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -66,35 +89,32 @@ function Credits({ movieID }: CreditsProps) {
         header={"Crew"}
         Content={
           credits ? (
-            <div className={"flex flex-col"}>
+            <div className={"flex flex-col lg:flex-row"}>
               {credits.crew.map((person: People) => (
-                <div key={person._id} className={"flex flex-row gap-2"}>
-                  <span className={spanStyle}>{person.name}</span>
-                  <span className={spanStyle}>{person.role}</span>
-                </div>
+                <PersonDetail key={person._id} person={person} />
               ))}
             </div>
           ) : (
             <div>No crew members found.</div>
           )
         }
+        cols={"col-span-2"}
       />
       <DetailSection
         header={"Cast"}
         Content={
           credits ? (
-            <div className={"flex flex-col"}>
+            <div className={"flex flex-col lg:flex-row"}>
               {credits.cast.map((person: People) => (
-                <div key={person._id} className={"flex flex-row gap-2"}>
-                  <span className={spanStyle}>{person.name}</span>
-                  <span className={spanStyle}>{person.role}</span>
-                </div>
+                <PersonDetail key={person._id} person={person} />
               ))}
             </div>
           ) : (
             <div>No cast members found.</div>
           )
         }
+        cols={"col-span-2"}
+        rows={"row-span-2"}
       />
     </>
   );
@@ -115,7 +135,7 @@ function MoviePage() {
         title={selectedMovie.title}
         posterPath={selectedMovie.poster_path}
       />
-      <div className={"grid grid-cols-1 md:grid-cols-2 gap-8"}>
+      <div className={"grid grid-cols-1 lg:grid-cols-2 gap-8"}>
         <DetailSection
           header={"Overview"}
           Content={<span className={spanStyle}>{selectedMovie.overview}</span>}
@@ -144,7 +164,7 @@ function MoviePage() {
             </div>
           }
         />
-        <Credits movieID={selectedMovie._id} />
+        <Credits />
       </div>
     </div>
   );

@@ -5,7 +5,7 @@
 // 4. returning the state based on the result of the try catch block
 // 5. run the fetchData with a useEffect every time the queryKey changed
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface QueryState<T> {
   data: T | null;
@@ -59,11 +59,21 @@ const useQuery = <T>(queryKey: string, queryFn: () => Promise<T>) => {
     }
   };
 
+  const refetch = useCallback(() => {
+    setState({
+      data: null,
+      error: null,
+      isLoading: true,
+      isFetching: true,
+    });
+    fetchData();
+  }, [queryKey, fetchData]);
+
   useEffect(() => {
     fetchData();
   }, [queryKey]);
 
-  return state;
+  return { ...state, refetch };
 };
 
 export default useQuery;
