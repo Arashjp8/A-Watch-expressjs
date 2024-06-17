@@ -26,7 +26,7 @@ export const getPopularMovies = async (req: Request, res: Response) => {
 
     const results = await MovieModel.find({});
 
-    res.status(200).send({
+    res.status(200).json({
       page,
       results,
       total_pages,
@@ -49,7 +49,7 @@ export const getMovieById = async (req: Request, res: Response) => {
       return;
     }
     console.log(movie);
-    res.status(200).send(movie);
+    res.status(200).json(movie);
   } catch (err: any) {
     handleDataBaseError(res, "Error fetching movie: ", err.message);
   }

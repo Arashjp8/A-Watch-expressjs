@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import moviesRoutes from "./routes/moviesRoutes";
 import searchRoutes from "./routes/searchRoutes";
 import tvShowsRoutes from "./routes/tvShowsRoutes";
+import apiKeyRoutes from "./routes/apiKeyRoutes";
 import { scrapeScheduler } from "./scraper/schedular";
 import https from "https";
 import fs from "fs";
@@ -24,8 +25,6 @@ app.use(cors());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
-// TODO - Send the data to the client
-
 // ROUTES
 app.get("/", (req: Request, res: Response) => {
   res.send("A-WATCH SERVER");
@@ -33,6 +32,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/movie", moviesRoutes);
 app.use("/api/tvshow", tvShowsRoutes);
 app.use("/api/search", searchRoutes);
+app.use("/api/key", apiKeyRoutes);
 
 // MONGOOSE SERVER
 const PORT = process.env.PORT || 6001;

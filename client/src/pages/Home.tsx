@@ -15,7 +15,7 @@ function Home() {
     return response.json();
   };
 
-  const { data, error, isLoading, isFetching } = useQuery("todos", fetchDummy);
+  const { data, error, isLoading, isFetching } = useQuery("movies", fetchDummy);
 
   console.log(data);
   console.log(error);
