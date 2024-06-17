@@ -8,7 +8,12 @@ import useQuery from "../hooks/useQuery";
 
 function Home() {
   const fetchDummy = async () => {
-    const response = await fetch("https://localhost:3001/api/movie/popular");
+    const response = await fetch("https://localhost:3001/api/movie/popular", {
+      method: "Get",
+      headers: {
+        "x-api-key": import.meta.env.VITE_REACT_APP_API_KEY,
+      },
+    });
     if (!response.ok) {
       throw new Error("network response was not okay");
     }

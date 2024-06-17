@@ -17,6 +17,7 @@ const validateApiKey = async (
   if (!validKey) {
     return res.status(401).json({ message: "Invalid API key" });
   }
+  console.log("valid API key");
 
   next();
 };
