@@ -1,19 +1,15 @@
 import MovieCard from "../components/MovieCard";
+import { Movie } from "../data/movies";
 import useQuery from "../hooks/useQuery";
+import { apiClient } from "../services/apiClient";
 
 function Home() {
-  // TODO: write an apiClient service
-  const fetchDummy = async () => {
-    const response = await fetch("https://localhost:3001/api/movie/popular", {
-      method: "Get",
-      headers: {
-        "x-api-key": import.meta.env.VITE_REACT_APP_API_KEY,
-      },
-    });
-    if (!response.ok) {
-      throw new Error("network response was not okay");
-    }
-    return response.json();
+  // routes:
+  // baseURL/api/movie/popular
+  // baseURL/api/movie/:id/videos
+  // baseURL/api/movie/:id/credits
+  const fetchDummy = async (): Promise<Movie> => {
+    return await apiClient("/api/movie/popular", "Get");
   };
 
   const { data, error, isLoading, isFetching } = useQuery("movies", fetchDummy);
