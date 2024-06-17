@@ -1,9 +1,14 @@
 import MovieCard from "../components/MovieCard";
 import useQuery from "../hooks/useQuery";
 
+// TODO: make apikey for fetching data
+// TODO: use https instead of http
+// TODO: fetch data from backend
+// TODO: show data in client
+
 function Home() {
   const fetchDummy = async () => {
-    const response = await fetch("https://jsonplaceholder.typicode.com/todos");
+    const response = await fetch("https://localhost:3001/api/movie/popular");
     if (!response.ok) {
       throw new Error("network response was not okay");
     }
