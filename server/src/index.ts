@@ -34,12 +34,6 @@ app.use("/api/movie", moviesRoutes);
 app.use("/api/tvshow", tvShowsRoutes);
 app.use("/api/search", searchRoutes);
 
-const options = {
-  key: fs.readFileSync(path.join(__dirname, "localhost-key.pem")),
-  cert: fs.readFileSync(path.join(__dirname, "./localhost.pem")),
-};
-
-const httpsServer = https.createServer(options, app);
 // MONGOOSE SERVER
 const PORT = process.env.PORT || 6001;
 
@@ -50,6 +44,14 @@ mongoose.connect(process.env.MONGO_URI || "").then(async () => {
 
   await startServer();
 });
+
+// CREATING HTTPS SERVER
+const options = {
+  key: fs.readFileSync(path.join(__dirname, "localhost-key.pem")),
+  cert: fs.readFileSync(path.join(__dirname, "./localhost.pem")),
+};
+
+const httpsServer = https.createServer(options, app);
 
 const startServer = async () => {
   //await scrapeScheduler();
