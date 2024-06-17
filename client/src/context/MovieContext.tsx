@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useContext, useState } from "react";
-import { Movie } from "../data/movies";
+import { Movie } from "../interface/movie";
 
 interface MovieContextType {
   selectedMovie: Movie | null;

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { IMovieResponse, Movie } from "../data/movies";
+import { IMovieResponse, Movie } from "../interface/movie";
 import { useMovieContext } from "../context/MovieContext";
 import useQuery from "../hooks/useQuery";
 import { apiClient } from "../services/apiClient";
@@ -11,7 +11,8 @@ function MovieCardGrid() {
   // baseURL/api/movie/:id/videos
   // baseURL/api/movie/:id/credits
   const fetchPopularMovies = async (): Promise<IMovieResponse> => {
-    return await apiClient("/api/movie/popular", "Get");
+    const movieData = await apiClient("/movie/popular", "Get");
+    return movieData;
   };
 
   const {

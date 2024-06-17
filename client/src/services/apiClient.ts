@@ -1,5 +1,5 @@
 export async function apiClient(endpoint: string, method: string) {
-  const baseURL = "https://localhost:3001";
+  const baseURL = "https://localhost:3001/api";
   const url = `${baseURL}${endpoint}`;
 
   try {
