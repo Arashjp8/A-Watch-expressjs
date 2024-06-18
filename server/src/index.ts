@@ -8,6 +8,7 @@ import moviesRoutes from "./routes/moviesRoutes";
 import searchRoutes from "./routes/searchRoutes";
 import tvShowsRoutes from "./routes/tvShowsRoutes";
 import apiKeyRoutes from "./routes/apiKeyRoutes";
+import userRoutes from "./routes/userRoutes";
 import { scrapeScheduler } from "./scraper/schedular";
 import https from "https";
 import fs from "fs";
@@ -33,6 +34,7 @@ app.use("/api/movie", moviesRoutes);
 app.use("/api/tvshow", tvShowsRoutes);
 app.use("/api/search", searchRoutes);
 app.use("/api/key", apiKeyRoutes);
+app.use("/api/user", userRoutes);
 
 // MONGOOSE SERVER
 const PORT = process.env.PORT || 6001;

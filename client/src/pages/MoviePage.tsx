@@ -1,5 +1,3 @@
-// TODO-FIX: in sm mode data is not in one column after adding credits
-
 import DetailSection from "../components/DetailSection";
 import Credits from "../components/Credits";
 import { useMovieContext } from "../context/MovieContext";
