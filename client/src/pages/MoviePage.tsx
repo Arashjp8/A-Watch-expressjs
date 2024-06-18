@@ -1,29 +1,10 @@
-import { useEffect } from "react";
+// TODO-FIX: in sm mode data is not in one column after adding credits
+
+import DetailSection from "../components/DetailSection";
+import Credits from "../components/Credits";
 import { useMovieContext } from "../context/MovieContext";
-import useQuery from "../hooks/useQuery";
-import { CreditsResponse, People } from "../interface/credits";
-import { apiClient } from "../services/apiClient";
 
-const headerStyle = "text-2xl font-semibold";
-const spanStyle = "text-lg text-gray-600 dark:text-gray-400";
-
-interface DetailSectionProps {
-  header: string;
-  Content: JSX.Element;
-  cols?: string;
-  rows?: string;
-}
-
-function DetailSection({ header, Content, cols, rows }: DetailSectionProps) {
-  if (!cols) cols = "";
-  if (!rows) rows = "";
-  return (
-    <section className={`${cols} ${rows}`}>
-      <h2 className={headerStyle}>{header}:</h2>
-      {Content}
-    </section>
-  );
-}
+export const spanStyle = "text-lg text-gray-600 dark:text-gray-400";
 
 interface HeroProps {
   title: string;
@@ -36,87 +17,6 @@ function Hero({ title, posterPath }: HeroProps) {
       <h1 className={"text-3xl font-bold"}>{title}</h1>
       <img src={posterPath} className={"w-48 h-72 rounded-md"} />
     </section>
-  );
-}
-
-interface PersonDetailProps {
-  person: People;
-}
-
-function PersonDetail({ person }: PersonDetailProps) {
-  return (
-    <div className={"flex flex-col gap-2 m-2"}>
-      <img src={person.profile_path} className={"w-[150px] h-[225px]"} />
-      <span className={spanStyle}>{person.name}</span>
-      <span className={spanStyle}>Role: {person.role}</span>
-    </div>
-  );
-}
-
-function Credits() {
-  const { selectedMovie } = useMovieContext();
-
-  const fetchCredits = async (): Promise<CreditsResponse> => {
-    const creditsData = await apiClient(
-      `/movie/${selectedMovie?._id}/credits`,
-      "Get",
-    );
-    return creditsData;
-  };
-
-  const {
-    data: credits,
-    error,
-    isLoading,
-    refetch,
-  } = useQuery(`movie-${selectedMovie?._id}-credits`, fetchCredits);
-
-  useEffect(() => {
-    refetch();
-  }, [selectedMovie]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>error: {error.message}</div>;
-  }
-
-  return (
-    <>
-      <DetailSection
-        header={"Crew"}
-        Content={
-          credits ? (
-            <div className={"flex flex-col lg:flex-row"}>
-              {credits.crew.map((person: People) => (
-                <PersonDetail key={person._id} person={person} />
-              ))}
-            </div>
-          ) : (
-            <div>No crew members found.</div>
-          )
-        }
-        cols={"col-span-2"}
-      />
-      <DetailSection
-        header={"Cast"}
-        Content={
-          credits ? (
-            <div className={"flex flex-col lg:flex-row"}>
-              {credits.cast.map((person: People) => (
-                <PersonDetail key={person._id} person={person} />
-              ))}
-            </div>
-          ) : (
-            <div>No cast members found.</div>
-          )
-        }
-        cols={"col-span-2"}
-        rows={"row-span-2"}
-      />
-    </>
   );
 }
 
