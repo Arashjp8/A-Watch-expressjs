@@ -13,9 +13,12 @@ interface PersonDetailProps {
 function PersonDetail({ person }: PersonDetailProps) {
   return (
     <div className={"flex flex-col gap-2 m-2"}>
-      <img src={person.profile_path} className={"w-[150px] h-[225px]"} />
-      <span className={spanStyle}>{person.name}</span>
-      <span className={spanStyle}>Role: {person.role}</span>
+      <img
+        src={person.profile_path}
+        className={"w-[150px] h-[225px] rounded-md"}
+      />
+      <span className={`${spanStyle} max-w-[150px]`}>{person.name}</span>
+      <span className={`${spanStyle} max-w-[150px]`}>Role: {person.role}</span>
     </div>
   );
 }
@@ -56,7 +59,7 @@ function Credits() {
         header={"Crew"}
         Content={
           credits ? (
-            <div className={"flex flex-col lg:flex-row"}>
+            <div className={"flex flex-col lg:flex-row flex-wrap gap-4"}>
               {credits.crew.map((person: People) => (
                 <PersonDetail key={person._id} person={person} />
               ))}
@@ -65,13 +68,13 @@ function Credits() {
             <div>No crew members found.</div>
           )
         }
-        cols={"col-span-2"}
+        cols={"lg:col-span-2 min-w-[1100px]"}
       />
       <DetailSection
         header={"Cast"}
         Content={
           credits ? (
-            <div className={"flex flex-col lg:flex-row"}>
+            <div className={"flex flex-col lg:flex-row flex-wrap gap-4"}>
               {credits.cast.map((person: People) => (
                 <PersonDetail key={person._id} person={person} />
               ))}
@@ -80,8 +83,7 @@ function Credits() {
             <div>No cast members found.</div>
           )
         }
-        cols={"col-span-2"}
-        rows={"row-span-2"}
+        cols={"lg:col-span-2 min-w-[1100px]"}
       />
     </>
   );
