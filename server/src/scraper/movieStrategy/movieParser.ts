@@ -25,12 +25,12 @@ export const movieParser = async (
       break;
     } else {
       const movieObject = await movieObjectScraper(
+        movieID,
         moviePageHtmlArray[i],
         movieLinks,
         i,
       );
       const newMovie = new MovieModel(movieObject);
-      newMovie._id = movieID;
       await newMovie.save();
       console.log(`✅ movie ${movieID} added to database`);
       console.log(`movie ${movieID} info: `, movieObject, "\n");
@@ -39,6 +39,7 @@ export const movieParser = async (
 };
 
 const movieObjectScraper = async (
+  movieID: string,
   moviePageHtml: any,
   movieLinks: string[],
   index: number,
@@ -61,10 +62,17 @@ const movieObjectScraper = async (
   const crew = organizePeople($, "crew");
   const cast = organizePeople($, "cast");
   const genres = parseGenres($(genresCssPath).text().trim());
-  const posterPath = $("img.poster").attr("src");
-  const backdropPath = $("img.backdrop").attr("src") || "";
+  const posterPath =
+    $("img.poster")
+      .attr("src")
+      ?.replace(/\/w\d+(_and_h\d+_.*)?\//, "/w500/") || "";
+  const backdropPath =
+    $("img.backdrop")
+      .attr("src")
+      ?.replace(/\/w\d+(_and_h\d+_.*)?\//, "/w1280/") || "";
 
   return {
+    _id: movieID,
     title,
     release_date: releaseDate,
     original_language: originalLanguage,

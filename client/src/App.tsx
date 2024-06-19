@@ -5,14 +5,11 @@ import Home from "./pages/Home";
 import MoviePage from "./pages/MoviePage";
 import { MovieContextProvider } from "./context/MovieContext";
 
-// FIX: height in bigger screens has a problem
-// A-Watch client has the same problem
 // TODO: Docerize the client side
-// TODO: make a place holder for the credits cards when loading
 
 function App() {
   return (
-    <div className="font-lato flex flex-col items-center w-[100vw] h-full">
+    <div className="font-lato flex flex-col items-center w-[100vw] h-full dark:bg-slate-950 dark:text-white ">
       <Navbar />
       <MovieContextProvider>
         <Routes>
