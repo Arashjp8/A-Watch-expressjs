@@ -5,6 +5,7 @@ import { CreditsResponse, People } from "../interface/credits";
 import { apiClient } from "../services/apiClient";
 import { spanStyle } from "../pages/MoviePage";
 import DetailSection from "./DetailSection";
+import Spinner from "./Spinner";
 
 interface PersonDetailProps {
   person: People;
@@ -46,7 +47,7 @@ function Credits() {
   }, [selectedMovie]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   if (error) {

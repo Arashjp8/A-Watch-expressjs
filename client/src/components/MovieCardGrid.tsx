@@ -3,6 +3,7 @@ import { IMovieResponse, Movie } from "../interface/movie";
 import { useMovieContext } from "../context/MovieContext";
 import useQuery from "../hooks/useQuery";
 import { apiClient } from "../services/apiClient";
+import Spinner from "./Spinner";
 
 function MovieCardGrid() {
   const navigate = useNavigate();
@@ -27,7 +28,14 @@ function MovieCardGrid() {
   console.log(isLoading);
   console.log(isFetching);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className={"relative h-screen w-full"}>
+        <div className="absolute top-1/2 left-1/2">
+          <Spinner />
+        </div>
+      </div>
+    );
   if (error) return <div>Error: {error.message}</div>;
 
   const { setSelectedMovie } = useMovieContext();
