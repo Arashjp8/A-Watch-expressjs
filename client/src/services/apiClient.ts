@@ -1,5 +1,5 @@
 export async function apiClient(endpoint: string, method: string) {
-  const baseURL = "https://localhost:3001/api";
+  const baseURL = `${import.meta.env.VITE_REACT_APP_BASEURL}/api`;
   const url = `${baseURL}${endpoint}`;
 
   try {
