@@ -1,28 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function NavItems() {
-  return (
-    <ul className={"text-white w-[20%] text-2xl flex flex-row space-x-12"}>
-      <li
-        className={"hover:cursor-pointer hover:underline hover:text-teal-400"}
-      >
-        item
-      </li>
-      <li
-        className={"hover:cursor-pointer hover:underline hover:text-teal-400"}
-      >
-        item
-      </li>
-      <li
-        className={"hover:cursor-pointer hover:underline hover:text-teal-400"}
-      >
-        item
-      </li>
-    </ul>
-  );
-}
-
 function Navbar() {
   const [toggled, setToggled] = useState<boolean>(false);
 
@@ -36,7 +14,7 @@ function Navbar() {
   return (
     <nav
       className={
-        "flex flex-row justify-between items-center w-full h-[80px] p-4 bg-slate-900/80 dark:bg-slate-800"
+        "flex flex-row justify-between items-center w-full h-[80px] p-4 bg-slate-900/80 dark:bg-slate-800 text-slate-900"
       }
     >
       <div className={"flex flex-row space-x-12 items-center"}>
