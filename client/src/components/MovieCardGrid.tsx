@@ -7,10 +7,6 @@ import Spinner from "./Spinner";
 
 function MovieCardGrid() {
   const navigate = useNavigate();
-  // routes:
-  // baseURL/api/movie/popular
-  // baseURL/api/movie/:id/videos
-  // baseURL/api/movie/:id/credits
   const fetchPopularMovies = async (): Promise<IMovieResponse> => {
     const movieData = await apiClient("/movie/popular", "Get");
     return movieData;
@@ -37,6 +33,14 @@ function MovieCardGrid() {
       </div>
     );
   if (error) return <div>Error: {error.message}</div>;
+  if (!movies || movies.results.length < 1)
+    return (
+      <div
+        className={"h-[100vh] w-full flex justify-center items-center text-xl"}
+      >
+        Couldn't fetch any data
+      </div>
+    );
 
   const { setSelectedMovie } = useMovieContext();
 

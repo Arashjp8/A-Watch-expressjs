@@ -10,12 +10,8 @@ import tvShowsRoutes from "./routes/tvShowsRoutes";
 import apiKeyRoutes from "./routes/apiKeyRoutes";
 import userRoutes from "./routes/userRoutes";
 import { scrapeScheduler } from "./scraper/schedular";
-import https from "https";
-import fs from "fs";
-import path from "path";
 
 console.clear();
-// process.stdout.clearScreenDown();
 
 // CONFIGURATION
 dotenv.config();
@@ -36,9 +32,10 @@ app.use("/api/search", searchRoutes);
 app.use("/api/key", apiKeyRoutes);
 app.use("/api/user", userRoutes);
 
-// MONGOOSE SERVER
 const PORT = process.env.PORT || 6001;
+const HOST = "0.0.0.0";
 
+// MONGOOSE SERVER
 mongoose.connect(process.env.MONGO_URI || "").then(async () => {
   console.log(
     `[server]: Connected to MongoDB Atlas on ${process.env.MONGO_URI}`,
@@ -47,18 +44,10 @@ mongoose.connect(process.env.MONGO_URI || "").then(async () => {
   await startServer();
 });
 
-// CREATING HTTPS SERVER
-const options = {
-  key: fs.readFileSync(path.join(__dirname, "localhost-key.pem")),
-  cert: fs.readFileSync(path.join(__dirname, "./localhost.pem")),
-};
-
-const httpsServer = https.createServer(options, app);
-
 const startServer = async () => {
   //await scrapeScheduler();
 
-  httpsServer.listen(PORT, () =>
-    console.log(`[server]: Server is running at https://localhost:${PORT}`),
+  app.listen(PORT, () =>
+    console.log(`[server]: Server is running at https://${HOST}:${PORT}`),
   );
 };
