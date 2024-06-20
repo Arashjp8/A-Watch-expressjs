@@ -46,8 +46,6 @@ const useQuery = <T>(queryKey: string, queryFn: () => Promise<T>) => {
       const data = await queryFn();
       cache[queryKey] = data;
 
-      console.log("Cache Data: ", cache);
-
       setState({ data, error: null, isLoading: false, isFetching: false });
     } catch (err) {
       setState({

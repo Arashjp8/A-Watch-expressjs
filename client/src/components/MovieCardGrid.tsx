@@ -16,13 +16,7 @@ function MovieCardGrid() {
     data: movies,
     error,
     isLoading,
-    isFetching,
   } = useQuery("movies", fetchPopularMovies);
-
-  console.log(movies);
-  console.log(error);
-  console.log(isLoading);
-  console.log(isFetching);
 
   if (isLoading)
     return (
