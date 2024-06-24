@@ -9,6 +9,7 @@ import searchRoutes from "./routes/searchRoutes";
 import tvShowsRoutes from "./routes/tvShowsRoutes";
 import apiKeyRoutes from "./routes/apiKeyRoutes";
 import userRoutes from "./routes/userRoutes";
+import authRoutes from "./routes/authRoutes";
 import { scrapeScheduler } from "./scraper/schedular";
 
 console.clear();
@@ -31,6 +32,7 @@ app.use("/api/tvshow", tvShowsRoutes);
 app.use("/api/search", searchRoutes);
 app.use("/api/key", apiKeyRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/auth", authRoutes);
 
 const PORT = process.env.PORT || 6001;
 const HOST = "0.0.0.0";

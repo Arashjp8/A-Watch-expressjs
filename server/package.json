@@ -14,11 +14,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/bcrypt": "^5.0.2",
-    "@types/cors": "^2.8.17",
-    "@types/morgan": "^1.9.9",
-    "@types/user-agents": "^1.0.4",
-    "@types/uuid": "^9.0.8",
     "axios": "^1.7.2",
     "axios-retry": "^4.4.0",
     "bcrypt": "^5.1.1",
@@ -37,6 +32,11 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
+    "@types/morgan": "^1.9.9",
+    "@types/user-agents": "^1.0.4",
+    "@types/uuid": "^9.0.8",
     "@types/express": "^4.17.21",
     "@types/node": "^20.14.5",
     "@types/slimerjs": "^0.10.8",
