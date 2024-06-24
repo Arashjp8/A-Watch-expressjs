@@ -1,4 +1,4 @@
-export async function apiClient(endpoint: string, method: string) {
+export async function apiClient(endpoint: string, method: string, body?: any) {
   const baseURL = `${import.meta.env.VITE_REACT_APP_LOCALBASEURL}/api`;
   const url = `${baseURL}${endpoint}`;
 
@@ -9,6 +9,7 @@ export async function apiClient(endpoint: string, method: string) {
         "Content-Type": "application/json",
         "x-api-key": import.meta.env.VITE_REACT_APP_API_KEY,
       },
+      body: body,
     });
 
     if (!response.ok) {

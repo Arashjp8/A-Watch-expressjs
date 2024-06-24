@@ -10,7 +10,7 @@ function AuthSection({ label, inputType, className }: AuthSectionProps) {
       <label
         htmlFor={inputType}
         id={inputType}
-        className={"block text-sm font-medium text-gray-700"}
+        className={"block text-sm font-medium text-gray-700 dark:text-gray-200"}
       >
         {label}
       </label>
@@ -31,12 +31,22 @@ interface AuthProps {
 }
 
 function Auth({ formOfAuth }: AuthProps) {
-  if (formOfAuth === "register") return <div>register</div>;
+  const isRegisterForm = formOfAuth === "register";
+
   return (
     <main className="flex-grow flex items-center justify-center">
-      <div className="bg-white p-8 rounded shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Sign In</h2>
+      <div className="bg-white dark:bg-slate-600 p-8 rounded shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-6 text-center">
+          {isRegisterForm ? "Sign Up" : "Sign In"}
+        </h2>
         <form action="#" method="POST">
+          {isRegisterForm && (
+            <AuthSection
+              className={"mb-4"}
+              label={"Username"}
+              inputType={"username"}
+            />
+          )}
           <AuthSection className={"mb-4"} label={"Email"} inputType={"email"} />
           <AuthSection
             className={"mb-6"}
@@ -45,14 +55,13 @@ function Auth({ formOfAuth }: AuthProps) {
           />
           <button
             type="submit"
-            className="w-full px-4 py-2 bg-teal-600 text-white font-semibold rounded-md shadow hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+            className="w-full px-4 py-2 bg-teal-500 text-white font-semibold rounded-md shadow hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
           >
             Sign In
           </button>
         </form>
         <p className="mt-6 text-center text-sm text-gray-600">
-          <a href="#" className="font-medium text-teal-600 hover:text-teal-500">
-            {" "}
+          <a href="#" className="font-medium text-teal-500 hover:text-teal-400">
             create an account{" "}
           </a>
         </p>
