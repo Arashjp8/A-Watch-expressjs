@@ -26,7 +26,7 @@ app.use(
     saveUninitialized: false,
     // WARNING: change it to true for deployment
     cookie: {
-      secure: false,
+      secure: true,
     },
   }),
 );

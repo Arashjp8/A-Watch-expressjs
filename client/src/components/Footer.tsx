@@ -1,11 +1,9 @@
 function Footer() {
   return (
-    <div
-      className={
-        "basis-1/12 flex justify-center items-center bg-slate-900/80 dark:bg-slate-800 bg-opacity-95 text-white w-[100vw] h-[80px] min-h-[80px] text-center"
-      }
+    <footer
+      className={"bg-slate-900/80 dark:bg-slate-800 bg-opacity-95 text-white"}
     >
-      <p>
+      <div className={"container mx-auto p-6 text-center"}>
         Copyright © 2024{" "}
         <a
           href="https://twitter.com/arashjafarpour1"
@@ -15,8 +13,8 @@ function Footer() {
           @arashjafarpour1
         </a>
         . All Rights Reserved{" "}
-      </p>
-    </div>
+      </div>
+    </footer>
   );
 }
 export default Footer;

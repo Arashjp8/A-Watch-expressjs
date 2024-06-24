@@ -4,15 +4,23 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import MoviePage from "./pages/MoviePage";
 import { MovieContextProvider } from "./context/MovieContext";
-
-// TODO: Docerize the client side
+import Auth from "./pages/Auth";
+import "./App.css";
 
 function App() {
   return (
-    <div className="font-lato flex flex-col items-center w-[100vw] h-full dark:bg-slate-900 dark:text-white ">
+    <div
+      style={{ gridTemplateRows: "auto 1fr auto" }}
+      className="min-h-screen font-lato grid grid-cols-1 items-center dark:bg-slate-900 dark:text-white "
+    >
       <Navbar />
       <MovieContextProvider>
         <Routes>
+          <Route
+            element={<Auth formOfAuth={"register"} />}
+            path={"/register"}
+          />
+          <Route element={<Auth formOfAuth={"login"} />} path={"/login"} />
           <Route element={<Home />} path={"/"} />
           <Route element={<MoviePage />} path={"/movies/:id"} />
         </Routes>
