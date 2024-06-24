@@ -1,4 +1,5 @@
 import express, { Express, Request, Response } from "express";
+import session from "express-session";
 import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
@@ -7,8 +8,6 @@ import mongoose from "mongoose";
 import moviesRoutes from "./routes/moviesRoutes";
 import searchRoutes from "./routes/searchRoutes";
 import tvShowsRoutes from "./routes/tvShowsRoutes";
-import apiKeyRoutes from "./routes/apiKeyRoutes";
-import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes";
 import { scrapeScheduler } from "./scraper/schedular";
 
@@ -17,6 +16,21 @@ console.clear();
 // CONFIGURATION
 dotenv.config();
 const app: Express = express();
+
+const sessionSecret: string = process.env.SESSION_SECRET!;
+
+app.use(
+  session({
+    secret: sessionSecret,
+    resave: false,
+    saveUninitialized: false,
+    // WARNING: change it to true for deployment
+    cookie: {
+      secure: false,
+    },
+  }),
+);
+
 app.use(express.json());
 app.use(morgan("common"));
 app.use(cors());
@@ -30,8 +44,6 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/movie", moviesRoutes);
 app.use("/api/tvshow", tvShowsRoutes);
 app.use("/api/search", searchRoutes);
-app.use("/api/key", apiKeyRoutes);
-app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 
 const PORT = process.env.PORT || 6001;
