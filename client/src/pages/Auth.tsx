@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 interface AuthSectionProps {
   label: string;
   inputType: string;
   className: string;
-  username?: string;
-  setUsername?: (username: string) => void;
   email?: string;
   setEmail?: (email: string) => void;
   password?: string;
@@ -17,26 +16,14 @@ function AuthSection({
   label,
   inputType,
   className,
-  username = "",
-  setUsername,
   email = "",
   setEmail,
   password = "",
   setPassword,
 }: AuthSectionProps) {
-  const setState =
-    inputType === "username"
-      ? setUsername
-      : inputType === "email"
-        ? setEmail
-        : setPassword;
+  const setState = inputType === "email" ? setEmail : setPassword;
 
-  const value =
-    inputType === "username"
-      ? username
-      : inputType === "email"
-        ? email
-        : password;
+  const value = inputType === "email" ? email : password;
 
   return (
     <div className={className}>
@@ -62,23 +49,18 @@ function AuthSection({
 }
 
 interface AuthProps {
-  formOfAuth: string;
+  formOfAuth: "register" | "login";
 }
 
 function Auth({ formOfAuth }: AuthProps) {
-  const navigate = useNavigate();
   const isRegisterForm = formOfAuth === "register";
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { auth } = useAuth(formOfAuth);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //isRegisterForm
-    //  ? await register(username, email, password)
-    //  : await login(email, password);
-    //navigate("/");
-    console.log("submitted");
+    auth(email, password);
   };
 
   return (
@@ -92,15 +74,6 @@ function Auth({ formOfAuth }: AuthProps) {
           {isRegisterForm ? "Sign Up" : "Sign In"}
         </h2>
         <form onSubmit={handleSubmit} action={"#"} method={"POST"}>
-          {isRegisterForm && (
-            <AuthSection
-              className={"mb-4"}
-              label={"Username"}
-              inputType={"username"}
-              username={username}
-              setUsername={setUsername}
-            />
-          )}
           <AuthSection
             className={"mb-4"}
             label={"Email"}

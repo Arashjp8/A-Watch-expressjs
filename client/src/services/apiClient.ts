@@ -2,13 +2,15 @@ export async function apiClient(endpoint: string, method: string, body?: any) {
   const baseURL = `${import.meta.env.VITE_REACT_APP_LOCALBASEURL}/api`;
   const url = `${baseURL}${endpoint}`;
 
-  console.log(JSON.stringify(body));
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+  const token = user.token;
 
   try {
     const options: RequestInit = {
       method: method,
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       credentials: "include",
       body: body ? JSON.stringify(body) : undefined,

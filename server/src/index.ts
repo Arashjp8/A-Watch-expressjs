@@ -16,7 +16,15 @@ dotenv.config();
 const app: Express = express();
 
 // MIDDLEWARE
-app.use(cors());
+
+const corsOptions = {
+  origin: "http://localhost:5173", // Set your client URL here
+  credentials: true, // Allow credentials
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Specify allowed methods
+  allowedHeaders: "Content-Type,Authorization", // Specify allowed headers
+};
+
+app.use(cors(corsOptions));
 app.use(morgan("common"));
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));

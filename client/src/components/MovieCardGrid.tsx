@@ -7,6 +7,8 @@ import Spinner from "./Spinner";
 
 function MovieCardGrid() {
   const navigate = useNavigate();
+  const { setSelectedMovie } = useMovieContext();
+
   const fetchPopularMovies = async (): Promise<IMovieResponse> => {
     const movieData = await apiClient("/movie/popular", "Get");
     return movieData;
@@ -34,7 +36,6 @@ function MovieCardGrid() {
       </div>
     );
 
-  const { setSelectedMovie } = useMovieContext();
   return (
     <div
       className={
