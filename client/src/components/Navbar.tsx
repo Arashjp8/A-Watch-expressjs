@@ -16,7 +16,7 @@ function Navbar({ user }: NavbarProps) {
     document.body.classList.toggle("dark");
   };
 
-  const handleLogout = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     logout();
   };
