@@ -23,8 +23,11 @@ function App() {
               element={<Auth formOfAuth={"register"} />}
               path={"/register"}
             />
-            <Route element={<MoviePage />} path={"/movies/:id"} />
             <Route element={<Auth formOfAuth={"login"} />} path={"/login"} />
+            <Route
+              element={<PrivateRoute element={<MoviePage />} />}
+              path={"/movies/:id"}
+            />
             <Route element={<PrivateRoute element={<Home />} />} path={"/"} />
           </Routes>
         </MovieContextProvider>

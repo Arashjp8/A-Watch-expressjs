@@ -4,11 +4,13 @@ import { useMovieContext } from "../context/MovieContext";
 import useQuery from "../hooks/useQuery";
 import { apiClient } from "../services/apiClient";
 import Spinner from "./Spinner";
+import { useAuth } from "../context/AuthContext";
 
 function MovieCardGrid() {
   const navigate = useNavigate();
+  const { apiKey } = useAuth();
   const fetchPopularMovies = async (): Promise<IMovieResponse> => {
-    const movieData = await apiClient("/movie/popular", "Get");
+    const movieData = await apiClient("/movie/popular", "Get", apiKey);
     return movieData;
   };
 

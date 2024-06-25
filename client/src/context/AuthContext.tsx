@@ -10,6 +10,7 @@ import { apiClient } from "../services/apiClient";
 
 interface AuthContextType {
   user: User | null;
+  apiKey: string | null;
   login: (email: string, password: string) => Promise<void>;
   register: (
     username: string,
@@ -33,6 +34,7 @@ export const useAuth = (): AuthContextType => {
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [apiKey, setApiKey] = useState<string | null>(null);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -65,16 +67,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       email,
       password,
     });
-    setUser(response.user);
+
+    const { apiKey } = response;
+
+    console.log("REGISTER RESPONSE: ", response);
+    setUser(response.data.user);
+    setApiKey(apiKey);
   };
 
   const logout = async () => {
     await apiClient("/auth/logout", "POST");
     setUser(null);
+    setApiKey(null);
   };
 
   const authContextValue: AuthContextType = {
     user,
+    apiKey,
     login,
     register,
     logout,

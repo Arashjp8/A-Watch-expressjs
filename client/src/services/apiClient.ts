@@ -1,20 +1,24 @@
-export async function apiClient(endpoint: string, method: string, body?: any) {
+export async function apiClient(
+  endpoint: string,
+  method: string,
+  body?: any,
+  apiKey?: string,
+) {
   const baseURL = `${import.meta.env.VITE_REACT_APP_LOCALBASEURL}/api`;
   const url = `${baseURL}${endpoint}`;
+
+  console.log(JSON.stringify(body));
 
   try {
     const options: RequestInit = {
       method: method,
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": import.meta.env.VITE_REACT_APP_API_KEY,
+        "x-api-key": apiKey ? apiKey : "",
       },
       credentials: "include",
+      body: body ? JSON.stringify(body) : undefined,
     };
-
-    if (body) {
-      options.body = JSON.stringify(body);
-    }
 
     const response = await fetch(url, options);
 
