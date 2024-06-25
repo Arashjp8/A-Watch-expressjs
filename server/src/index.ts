@@ -18,10 +18,10 @@ const app: Express = express();
 // MIDDLEWARE
 
 const corsOptions = {
-  origin: "http://localhost:5173", // Set your client URL here
-  credentials: true, // Allow credentials
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Specify allowed methods
-  allowedHeaders: "Content-Type,Authorization", // Specify allowed headers
+  origin: process.env.CLIENT_URL,
+  credentials: true,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: "Content-Type,Authorization",
 };
 
 app.use(cors(corsOptions));
