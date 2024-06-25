@@ -16,7 +16,7 @@ function App() {
       style={{ gridTemplateRows: "auto 1fr auto" }}
       className="min-h-screen font-lato grid grid-cols-1 items-center dark:bg-slate-900 dark:text-white "
     >
-      <Navbar />
+      <Navbar user={user} />
       <Routes>
         <Route
           path={"/"}

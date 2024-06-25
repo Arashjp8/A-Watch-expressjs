@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import { apiClient } from "../services/apiClient";
 
-export const useAuth = (typeOfAuth: "register" | "login") => {
+export const useAuth = (typeOfAuth?: "register" | "login") => {
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { dispatch } = useAuthContext();
