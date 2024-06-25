@@ -1,9 +1,4 @@
-export async function apiClient(
-  endpoint: string,
-  method: string,
-  body?: any,
-  apiKey?: string,
-) {
+export async function apiClient(endpoint: string, method: string, body?: any) {
   const baseURL = `${import.meta.env.VITE_REACT_APP_LOCALBASEURL}/api`;
   const url = `${baseURL}${endpoint}`;
 
@@ -14,7 +9,6 @@ export async function apiClient(
       method: method,
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": apiKey ? apiKey : "",
       },
       credentials: "include",
       body: body ? JSON.stringify(body) : undefined,

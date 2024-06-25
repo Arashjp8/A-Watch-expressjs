@@ -1,96 +1,59 @@
 import {
+  Dispatch,
   ReactNode,
   createContext,
-  useContext,
   useEffect,
-  useState,
+  useReducer,
 } from "react";
-import { User } from "../interface/user";
-import { apiClient } from "../services/apiClient";
 
-interface AuthContextType {
-  user: User | null;
-  apiKey: string | null;
-  login: (email: string, password: string) => Promise<void>;
-  register: (
-    username: string,
-    email: string,
-    password: string,
-  ) => Promise<void>;
-  logout: () => Promise<void>;
+interface State {
+  user: any;
 }
 
-const AuthContext = createContext<AuthContextType | null>(null);
+type Action = { type: "LOGIN"; payload: any } | { type: "LOGOUT" };
 
-export const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
-
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-
-  return context;
+const initialState: State = {
+  user: null,
 };
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [apiKey, setApiKey] = useState<string | null>(null);
+export const AuthContext = createContext<{
+  state: State;
+  dispatch: Dispatch<Action>;
+}>({
+  state: initialState,
+  dispatch: () => null,
+});
+
+const authReducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case "LOGIN":
+      return { ...state, user: action.payload };
+    case "LOGOUT":
+      return { ...state, user: null };
+    default:
+      return state;
+  }
+};
+
+interface AuthContextProviderProps {
+  children: ReactNode;
+}
+
+export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
+  const [state, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await apiClient("/auth/check-session", "GET");
-        setUser(response.user);
-      } catch (error) {
-        setUser(null);
-      }
-    };
+    const user = JSON.parse(localStorage.getItem("user") || "null");
 
-    checkAuth();
+    if (user) {
+      dispatch({ type: "LOGIN", payload: user });
+    }
   }, []);
 
-  const login = async (email: string, password: string) => {
-    const response = await apiClient("/auth/login", "POST", {
-      email,
-      password,
-    });
-    setUser(response.user);
-  };
-
-  const register = async (
-    username: string,
-    email: string,
-    password: string,
-  ) => {
-    const response = await apiClient("/auth/register", "POST", {
-      username,
-      email,
-      password,
-    });
-
-    const { apiKey } = response;
-
-    console.log("REGISTER RESPONSE: ", response);
-    setUser(response.data.user);
-    setApiKey(apiKey);
-  };
-
-  const logout = async () => {
-    await apiClient("/auth/logout", "POST");
-    setUser(null);
-    setApiKey(null);
-  };
-
-  const authContextValue: AuthContextType = {
-    user,
-    apiKey,
-    login,
-    register,
-    logout,
-  };
+  console.log("AuthContext State: ", state);
 
   return (
-    <AuthContext.Provider value={authContextValue}>
+    <AuthContext.Provider value={{ state, dispatch }}>
       {children}
     </AuthContext.Provider>
   );

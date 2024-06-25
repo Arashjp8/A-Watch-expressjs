@@ -6,7 +6,6 @@ import { apiClient } from "../services/apiClient";
 import { spanStyle } from "../pages/MoviePage";
 import DetailSection from "./DetailSection";
 import Spinner from "./Spinner";
-import { useAuth } from "../context/AuthContext";
 
 interface PersonDetailProps {
   person: People;
@@ -27,13 +26,11 @@ function PersonDetail({ person }: PersonDetailProps) {
 
 function Credits() {
   const { selectedMovie } = useMovieContext();
-  const { apiKey } = useAuth();
 
   const fetchCredits = async (): Promise<CreditsResponse> => {
     const creditsData = await apiClient(
       `/movie/${selectedMovie?._id}/credits`,
       "Get",
-      apiKey,
     );
     return creditsData;
   };

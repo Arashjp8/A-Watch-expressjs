@@ -1,10 +1,3 @@
-// most important things we need
-// 1. geting the queryKey and queryFn
-// 2. set a state based on the QueryState<T> interface
-// 3. write a fetchData function that checks the cache data then trys fetching with queryFn
-// 4. returning the state based on the result of the try catch block
-// 5. run the fetchData with a useEffect every time the queryKey changed
-
 import { useCallback, useEffect, useState } from "react";
 
 interface QueryState<T> {

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
 
 interface AuthSectionProps {
   label: string;
@@ -72,14 +71,14 @@ function Auth({ formOfAuth }: AuthProps) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, register } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    isRegisterForm
-      ? await register(username, email, password)
-      : await login(email, password);
-    navigate("/");
+    //isRegisterForm
+    //  ? await register(username, email, password)
+    //  : await login(email, password);
+    //navigate("/");
+    console.log("submitted");
   };
 
   return (
