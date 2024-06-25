@@ -54,4 +54,12 @@ const logout = async (req: Request, res: Response) => {
   });
 };
 
-export { register, login, logout };
+const checkSession = (req: Request, res: Response) => {
+  if (req.session.user_id) {
+    res.status(200).json({ user: req.session.user_id });
+  } else {
+    res.status(401).json({ message: "Unauthorized" });
+  }
+};
+
+export { register, login, logout, checkSession };

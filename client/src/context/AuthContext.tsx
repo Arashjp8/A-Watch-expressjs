@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const checkAuth = async () => {
       try {
         const response = await apiClient("/auth/check-session", "GET");
-        setUser(response.data.user);
+        setUser(response.user);
       } catch (error) {
         setUser(null);
       }
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       email,
       password,
     });
-    setUser(response.data.user);
+    setUser(response.user);
   };
 
   const register = async (
@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       email,
       password,
     });
-    setUser(response.data.user);
+    setUser(response.user);
   };
 
   const logout = async () => {

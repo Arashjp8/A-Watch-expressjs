@@ -7,6 +7,7 @@ import { MovieContextProvider } from "./context/MovieContext";
 import Auth from "./pages/Auth";
 import "./App.css";
 import { AuthProvider } from "./context/AuthContext";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -16,17 +17,17 @@ function App() {
     >
       <Navbar />
       <AuthProvider>
-        <Routes>
-          <Route
-            element={<Auth formOfAuth={"register"} />}
-            path={"/register"}
-          />
-          <Route element={<Auth formOfAuth={"login"} />} path={"/login"} />
-          <MovieContextProvider>
-            <Route element={<Home />} path={"/"} />
+        <MovieContextProvider>
+          <Routes>
+            <Route
+              element={<Auth formOfAuth={"register"} />}
+              path={"/register"}
+            />
             <Route element={<MoviePage />} path={"/movies/:id"} />
-          </MovieContextProvider>
-        </Routes>
+            <Route element={<Auth formOfAuth={"login"} />} path={"/login"} />
+            <Route element={<PrivateRoute element={<Home />} />} path={"/"} />
+          </Routes>
+        </MovieContextProvider>
       </AuthProvider>
       <Footer />
     </div>
