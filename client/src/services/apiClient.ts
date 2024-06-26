@@ -6,7 +6,7 @@ export async function apiClient(endpoint: string, method: string, body?: any) {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     const token = user.token;
 
-    let options: RequestInit = {
+    const options: RequestInit = {
       method: method,
       headers: {
         "Content-Type": "application/json",

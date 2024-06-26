@@ -16,7 +16,7 @@ function PersonDetail({ person }: PersonDetailProps) {
     <div className={"flex flex-col gap-2 m-2"}>
       <img
         src={person.profile_path}
-        className={"w-[150px] h-[225px] rounded-md"}
+        className={"w-[150px] h-[225px] object-cover rounded-md"}
       />
       <span className={`${spanStyle} max-w-[150px]`}>{person.name}</span>
       <span className={`${spanStyle} max-w-[150px]`}>Role: {person.role}</span>
